@@ -1,0 +1,221 @@
+
+/* =========================================
+   SHED - BOTTOM NAVIGATION
+========================================= */
+
+:host {
+  display: block;
+  font-family: var(--shed-body);
+
+  --tab-active: #d76b91;
+  --tab-inactive: #806778;
+  --tab-active-bg: #fff0f5;
+}
+
+/* =========================================
+   TAB BAR
+========================================= */
+
+.shed-tab-bar {
+  --background: #ffffff;
+  --border: none;
+
+  display: flex;
+  align-items: stretch;
+  justify-content: space-around;
+
+  width: 100%;
+  min-height: 66px;
+  height: auto;
+
+  padding: 6px 6px 5px;
+  box-sizing: border-box;
+
+  border-top: 1px solid var(--shed-border);
+  background: #ffffff;
+
+  box-shadow:
+    0 -3px 15px rgba(81, 52, 71, 0.035);
+}
+
+/* =========================================
+   TAB BUTTONS
+========================================= */
+
+ion-tab-button {
+  position: relative;
+
+  flex: 1 1 0;
+  min-width: 0;
+  max-width: none;
+  min-height: 54px;
+
+  --background: transparent;
+  --background-focused: #fff5f9;
+  --background-hover: #fff5f9;
+
+  --color: var(--tab-inactive);
+  --color-selected: var(--tab-active);
+
+  --ripple-color: var(--shed-pink);
+
+  margin: 0 2px;
+  padding: 4px 0;
+
+  border-radius: 14px;
+  box-sizing: border-box;
+
+  font-family: var(--shed-body);
+
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
+
+  ion-icon {
+    font-size: 23px;
+    margin-bottom: 5px;
+    color: var(--tab-inactive);
+  }
+
+  ion-label {
+    margin: 0;
+    color: var(--tab-inactive);
+
+    font-family: var(--shed-body);
+    font-size: var(--shed-font-caption);
+    font-weight: 600;
+
+    line-height: 1.4;
+    letter-spacing: 0;
+    white-space: nowrap;
+  }
+}
+
+/* =========================================
+   ACTIVE TAB
+========================================= */
+
+ion-tab-button.tab-selected {
+  --background: var(--tab-active-bg);
+  --color: var(--tab-active);
+  --color-selected: var(--tab-active);
+
+  background: var(--tab-active-bg);
+
+  border-radius: 14px;
+
+  ion-icon {
+    color: var(--tab-active);
+  }
+
+  ion-label {
+    color: var(--tab-active);
+    font-weight: 700;
+  }
+}
+
+/* =========================================
+   ACTIVE TAB INDICATOR
+========================================= */
+
+ion-tab-button.tab-selected::before {
+  content: '';
+
+  position: absolute;
+  top: 0;
+  left: 50%;
+
+  width: 23px;
+  height: 3px;
+
+  transform: translateX(-50%);
+
+  background: var(--shed-rose);
+  border-radius: 0 0 6px 6px;
+
+  pointer-events: none;
+}
+
+/* =========================================
+   HOVER
+========================================= */
+
+@media (hover: hover) {
+
+  ion-tab-button:not(.tab-selected):hover {
+    --background: #fff8fb;
+
+    ion-icon,
+    ion-label {
+      color: var(--shed-mauve);
+    }
+  }
+
+}
+
+/* =========================================
+   SMALL PHONES
+========================================= */
+
+@media (max-width: 380px) {
+
+  .shed-tab-bar {
+    padding-left: 3px;
+    padding-right: 3px;
+    min-height: 64px;
+  }
+
+  ion-tab-button {
+    margin: 0 1px;
+    padding: 3px 0;
+
+    ion-icon {
+      font-size: 21px;
+      margin-bottom: 4px;
+    }
+
+    ion-label {
+      font-size: 10px;
+    }
+  }
+
+}
+
+/* =========================================
+   VERY SMALL PHONES
+========================================= */
+
+@media (max-width: 320px) {
+
+  ion-tab-button {
+
+    ion-icon {
+      font-size: 20px;
+    }
+
+    ion-label {
+      font-size: 9px;
+    }
+
+  }
+
+}
+
+/* =========================================
+   ACCESSIBILITY
+========================================= */
+
+ion-tab-button:focus-visible {
+  outline: 2px solid var(--shed-rose);
+  outline-offset: -3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  ion-tab-button,
+  ion-tab-button ion-icon,
+  ion-tab-button ion-label {
+    transition: none;
+  }
+
+}

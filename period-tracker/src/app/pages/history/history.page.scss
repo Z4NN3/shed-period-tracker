@@ -1,0 +1,799 @@
+
+/* =========================================
+   SHED - HISTORY PAGE
+   MATCHED WITH TRACK PAGE DESIGN
+========================================= */
+
+:host {
+  display: block;
+  font-family: var(--shed-body, 'Comfortaa', sans-serif);
+  color: var(--shed-text, #513447);
+}
+
+/* =========================================
+   PAGE LAYOUT
+========================================= */
+
+.history-content {
+  --background: var(--shed-bg, #fffafc);
+  --color: var(--shed-text, #513447);
+}
+
+.history-container {
+  width: 100%;
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 22px 16px 100px;
+  box-sizing: border-box;
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--shed-heading, 'Fredoka', sans-serif);
+    font-weight: 600;
+  }
+
+  p,
+  span,
+  strong {
+    font-family: var(--shed-body, 'Comfortaa', sans-serif);
+  }
+}
+
+/* =========================================
+   HEADER
+========================================= */
+
+.history-toolbar {
+  --background: #ffffff;
+  --color: var(--shed-text, #513447);
+  --border-color: var(--shed-border, #eedde6);
+
+  ion-title {
+    font-family: var(--shed-heading, 'Fredoka', sans-serif);
+    font-size: var(--shed-font-brand, 24px);
+    font-weight: 700;
+  }
+
+  .page-name {
+    margin-left: 5px;
+    font-family: var(--shed-body, 'Comfortaa', sans-serif);
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--shed-muted, #806778);
+    vertical-align: baseline;
+  }
+}
+
+.app-name {
+  font-family: var(--shed-heading, 'Fredoka', sans-serif);
+  font-weight: 700;
+  color: var(--shed-rose, #d76b91);
+}
+
+/* =========================================
+   PAGE INTRODUCTION
+========================================= */
+
+.history-intro {
+  margin-bottom: 24px;
+}
+
+.eyebrow {
+  margin: 0 0 11px;
+  color: #a25c7c;
+  font-size: var(--shed-font-caption, 11px);
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  line-height: 1.6;
+}
+
+.intro-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.intro-copy {
+  flex: 1;
+  min-width: 0;
+
+  h1 {
+    margin: 0 0 9px;
+    font-size: var(--shed-font-page, 28px);
+    line-height: 1.3;
+    color: var(--shed-text, #513447);
+  }
+
+  p {
+    max-width: 480px;
+    margin: 0;
+    color: var(--shed-muted, #806778);
+    font-size: var(--shed-font-body, 14px);
+    line-height: 1.8;
+  }
+}
+
+.intro-icon {
+  width: 54px;
+  height: 54px;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  border-radius: 17px;
+  background: #f9e1eb;
+  color: #ad587f;
+
+  ion-icon {
+    font-size: 27px;
+  }
+}
+
+/* =========================================
+   HISTORY OVERVIEW
+========================================= */
+
+.history-overview {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin-bottom: 28px;
+}
+
+.summary-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 17px;
+  min-width: 0;
+  border: 1px solid #eedde6;
+  border-radius: 18px;
+  background: #fbe4ed;
+
+  &:nth-child(2) {
+    background: #f2e7f1;
+  }
+}
+
+.summary-icon {
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  border-radius: 13px;
+  background: rgba(255, 255, 255, 0.75);
+  color: #ad587f;
+
+  ion-icon {
+    font-size: 23px;
+  }
+}
+
+.summary-text {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  min-width: 0;
+}
+
+.summary-label {
+  color: #765367;
+  font-size: var(--shed-font-support, 12px);
+  font-weight: 700;
+  line-height: 1.5;
+}
+
+.summary-value {
+  color: var(--shed-text, #513447);
+  font-family: var(--shed-heading, 'Fredoka', sans-serif) !important;
+  font-size: var(--shed-font-stat, 28px);
+  font-weight: 600;
+  line-height: 1;
+}
+
+/* =========================================
+   SECTION HEADINGS
+========================================= */
+
+.section-title {
+  margin: 0 0 14px;
+  color: var(--shed-text, #513447);
+  font-size: var(--shed-font-section, 21px);
+  line-height: 1.35;
+}
+
+.section-description {
+  margin: 0;
+  color: var(--shed-muted, #806778);
+  font-size: var(--shed-font-support, 12px);
+  line-height: 1.7;
+}
+
+/* =========================================
+   HISTORY PERIOD / WELLNESS SWITCH
+   SAME STRUCTURE AS TRACK PAGE
+========================================= */
+
+.history-tabs-section {
+  margin-bottom: 28px;
+}
+
+.history-tabs {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 6px;
+  padding: 5px;
+
+  background: #f8edf2;
+  border-radius: 18px;
+}
+
+/* =========================================
+   NATIVE SWITCH BUTTONS
+========================================= */
+
+.history-tabs button.history-tab {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+
+  width: 100%;
+  min-width: 0;
+  min-height: 46px;
+
+  padding: 10px;
+  margin: 0;
+
+  border: 0;
+  border-radius: 14px;
+
+  background: transparent;
+  color: #866478;
+
+  font-family: var(--shed-body, 'Comfortaa', sans-serif);
+  font-size: var(--shed-font-button, 13px);
+  font-weight: 700;
+  line-height: normal;
+
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  -webkit-tap-highlight-color: transparent;
+
+  ion-icon {
+    flex-shrink: 0;
+    font-size: 19px;
+  }
+
+  span {
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+    color: inherit;
+  }
+
+  /* Active button - identical to Track */
+  &.active {
+    background: #ffffff;
+    color: #8c345e;
+
+    box-shadow:
+      0 2px 10px rgba(90, 40, 70, 0.08);
+  }
+
+  /* Inactive button */
+  &:not(.active) {
+    background: transparent;
+    color: #866478;
+    box-shadow: none;
+  }
+
+  /* Keyboard accessibility */
+  &:focus-visible {
+    outline: 3px solid var(--shed-rose, #d76b91);
+    outline-offset: 2px;
+  }
+}
+
+/* =========================================
+   RECORD SECTION
+========================================= */
+
+.records-section {
+  margin-bottom: 28px;
+}
+
+.records-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 18px;
+
+  .section-title {
+    margin-bottom: 5px;
+  }
+}
+
+.records-count {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 11px;
+  border: 1px solid #efd8e3;
+  border-radius: 999px;
+  background: #fae9f0;
+  color: #9d5277;
+  font-size: var(--shed-font-caption, 11px);
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.records-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* =========================================
+   RECORD CARDS
+========================================= */
+
+.history-record-card {
+  margin: 0;
+
+  --background: #ffffff;
+  --color: var(--shed-text, #513447);
+
+  border: 1px solid var(--shed-border, #eedde6);
+  border-radius: 20px;
+
+  box-shadow:
+    0 5px 18px rgba(91, 51, 72, 0.05);
+
+  overflow: hidden;
+
+  ion-card-content {
+    padding: var(--shed-space-card, 20px);
+  }
+}
+
+.period-record {
+  border-top: 3px solid #d76b91;
+}
+
+.wellness-record {
+  border-top: 3px solid #b784a7;
+}
+
+/* =========================================
+   RECORD HEADER
+========================================= */
+
+.record-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding-bottom: 17px;
+  margin-bottom: 16px;
+  border-bottom: 1px solid #f0e4eb;
+}
+
+.record-heading {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+  min-width: 0;
+}
+
+.record-icon {
+  width: 45px;
+  height: 45px;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  border-radius: 14px;
+  background: #fbe4ed;
+  color: #ba5b85;
+
+  ion-icon {
+    font-size: 23px;
+  }
+}
+
+.wellness-record .record-icon {
+  background: #f2e7f1;
+  color: #9d638e;
+}
+
+.record-heading-copy {
+  min-width: 0;
+
+  h3 {
+    margin: 5px 0 0;
+    font-size: var(--shed-font-card, 18px);
+    line-height: 1.35;
+    color: var(--shed-text, #513447);
+  }
+}
+
+.record-eyebrow {
+  color: #a46e89;
+  font-size: var(--shed-font-caption, 11px);
+  font-weight: 700;
+  letter-spacing: 0.45px;
+  line-height: 1.4;
+}
+
+/* =========================================
+   FLOW AND MOOD BADGES
+========================================= */
+
+.flow-badge,
+.mood-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 12px;
+  border: 1px solid #ecd1de;
+  border-radius: 999px;
+  background: #fae7ef;
+  color: #a44e77;
+
+  font-family: var(--shed-body, 'Comfortaa', sans-serif);
+  font-size: var(--shed-font-caption, 11px);
+  font-weight: 700;
+  line-height: 1.4;
+  white-space: nowrap;
+}
+
+.flow-badge {
+  &.light {
+    background: #fceaf1;
+    color: #a35c7e;
+  }
+
+  &.medium {
+    background: #f6dce8;
+    color: #9d4e75;
+  }
+
+  &.heavy {
+    background: #eed0e0;
+    color: #843b61;
+  }
+}
+
+.mood-badge {
+  background: #f2e7f1;
+  border-color: #e7d5e5;
+  color: #8c5d82;
+}
+
+/* =========================================
+   RECORD DETAILS
+========================================= */
+
+.record-details {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.detail-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.detail-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+  color: var(--shed-muted, #806778);
+  font-size: var(--shed-font-support, 12px);
+  font-weight: 600;
+  line-height: 1.7;
+
+  ion-icon {
+    flex-shrink: 0;
+    font-size: 17px;
+    color: #b57495;
+  }
+}
+
+.detail-value {
+  min-width: 0;
+  text-align: right;
+  overflow-wrap: anywhere;
+  color: var(--shed-text, #513447);
+  font-size: var(--shed-font-support, 12px);
+  font-weight: 700;
+  line-height: 1.7;
+}
+
+.symptoms-row .detail-value {
+  max-width: 60%;
+}
+
+/* =========================================
+   RECORD NOTES
+========================================= */
+
+.record-notes {
+  margin-top: 18px;
+  padding: 15px;
+  border: 1px solid #f0e2e9;
+  border-radius: 14px;
+  background: #fffbfd;
+
+  .notes-heading {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 10px;
+    color: #9d5c7c;
+    font-size: var(--shed-font-support, 12px);
+    font-weight: 700;
+
+    ion-icon {
+      font-size: 17px;
+    }
+  }
+
+  p {
+    margin: 0;
+    color: #725467;
+    font-size: var(--shed-font-support, 12px);
+    line-height: 1.8;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+  }
+}
+
+/* =========================================
+   EMPTY STATES
+========================================= */
+
+.empty-state {
+  padding: 35px 22px;
+  border: 1px dashed #e7bed1;
+  border-radius: 20px;
+  background: #ffffff;
+  text-align: center;
+
+  .empty-icon {
+    width: 65px;
+    height: 65px;
+    display: grid;
+    place-items: center;
+    margin: 0 auto 17px;
+    border-radius: 20px;
+    background: #fce4ed;
+    color: #ba5b85;
+
+    ion-icon {
+      font-size: 30px;
+    }
+  }
+
+  h3 {
+    margin: 0 0 11px;
+    color: var(--shed-text, #513447);
+    font-size: var(--shed-font-card, 18px);
+  }
+
+  p {
+    max-width: 380px;
+    margin: 0 auto 20px;
+    color: var(--shed-muted, #806778);
+    font-size: var(--shed-font-body, 14px);
+    line-height: 1.8;
+  }
+}
+
+.empty-action {
+  min-height: 45px;
+
+  --background: var(--shed-rose, #d76b91);
+  --background-hover: #bf5b82;
+  --color: #ffffff;
+  --border-radius: 13px;
+  --box-shadow: none;
+
+  font-family: var(--shed-body, 'Comfortaa', sans-serif);
+  font-size: var(--shed-font-button, 13px);
+  font-weight: 700;
+  text-transform: none;
+}
+
+/* =========================================
+   GENTLE REMINDER
+========================================= */
+
+.history-reminder {
+  margin: 0 0 12px;
+
+  --background: #f4e8f1;
+  --color: var(--shed-text, #513447);
+
+  border: 1px solid #e8d4e5;
+  border-radius: 20px;
+  box-shadow: none;
+
+  ion-card-content {
+    padding: var(--shed-space-card, 20px);
+  }
+
+  p {
+    margin: 0;
+    color: #795b70;
+    font-size: var(--shed-font-body, 14px);
+    line-height: 1.8;
+  }
+}
+
+.reminder-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 15px;
+
+  h3 {
+    margin: 0;
+    font-size: var(--shed-font-card, 18px);
+    color: var(--shed-text, #513447);
+  }
+}
+
+.reminder-icon {
+  width: 42px;
+  height: 42px;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  border-radius: 13px;
+  background: #ffffff;
+  color: #a65e8b;
+
+  ion-icon {
+    font-size: 22px;
+  }
+}
+
+.reminder-link {
+  margin: 13px 0 0;
+
+  --color: #923e68;
+  --padding-start: 0;
+  --padding-end: 4px;
+
+  font-family: var(--shed-body, 'Comfortaa', sans-serif);
+  font-size: var(--shed-font-button, 13px);
+  font-weight: 700;
+  text-transform: none;
+
+  ion-icon {
+    font-size: 17px;
+  }
+}
+
+/* =========================================
+   TABLET / DESKTOP
+========================================= */
+
+@media (min-width: 768px) {
+  .history-container {
+    padding-top: 28px;
+  }
+
+  .records-list {
+    gap: 16px;
+  }
+}
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 480px) {
+  .history-container {
+    padding: 18px 12px 95px;
+  }
+
+  .intro-icon {
+    width: 48px;
+    height: 48px;
+  }
+
+  .history-overview {
+    gap: 10px;
+  }
+
+  .summary-card {
+    padding: 14px 12px;
+    gap: 10px;
+  }
+
+  .summary-icon {
+    width: 38px;
+    height: 38px;
+
+    ion-icon {
+      font-size: 20px;
+    }
+  }
+
+  .summary-label {
+    font-size: 11px;
+  }
+
+  .summary-value {
+    font-size: 25px;
+  }
+
+  .history-record-card ion-card-content {
+    padding: 17px 15px;
+  }
+
+  .record-heading-copy h3 {
+    font-size: 17px;
+  }
+}
+
+/* =========================================
+   SMALL PHONES
+========================================= */
+
+@media (max-width: 360px) {
+  .history-container {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  .summary-card {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .record-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .detail-row {
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .detail-value {
+    text-align: left;
+  }
+
+  .symptoms-row .detail-value {
+    max-width: 100%;
+  }
+
+  .history-tabs button.history-tab {
+    font-size: 11px;
+  }
+}
+
+/* =========================================
+   ACCESSIBILITY
+========================================= */
+
+.empty-action:focus-visible,
+.reminder-link:focus-visible {
+  outline: 2px solid var(--shed-rose, #d76b91);
+  outline-offset: 2px;
+}

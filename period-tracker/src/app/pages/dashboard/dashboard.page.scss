@@ -1,0 +1,815 @@
+
+/* =========================================
+   SHED - DASHBOARD
+   PASTEL PINK / MAUVE / DUSTY ROSE
+========================================= */
+
+:host {
+  display: block;
+
+  font-family: var(
+    --shed-body,
+    'Comfortaa',
+    sans-serif
+  );
+
+  color: var(--shed-text, #513447);
+}
+
+/* =========================================
+   PAGE CONTAINER
+========================================= */
+
+.dashboard-content {
+  --background: var(--shed-bg, #fffafc);
+  --color: var(--shed-text, #513447);
+}
+
+.dashboard-container {
+  width: 100%;
+  max-width: 720px;
+  margin: 0 auto;
+
+  padding: 22px 16px 100px;
+  box-sizing: border-box;
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(
+      --shed-heading,
+      'Fredoka',
+      sans-serif
+    );
+
+    font-weight: 600;
+  }
+
+  p,
+  span,
+  strong,
+  small {
+    font-family: var(
+      --shed-body,
+      'Comfortaa',
+      sans-serif
+    );
+  }
+}
+
+/* =========================================
+   HEADER
+========================================= */
+
+.dashboard-toolbar {
+  --background: #ffffff;
+  --color: var(--shed-text, #513447);
+  --border-color: var(--shed-border, #eedde6);
+
+  ion-title {
+    font-family: var(
+      --shed-heading,
+      'Fredoka',
+      sans-serif
+    );
+
+    font-size: var(--shed-font-brand, 24px);
+    font-weight: 700;
+  }
+}
+
+.app-name {
+  font-family: var(
+    --shed-heading,
+    'Fredoka',
+    sans-serif
+  );
+
+  font-weight: 700;
+  color: var(--shed-rose, #d76b91);
+}
+
+/* =========================================
+   WELCOME SECTION
+========================================= */
+
+.welcome-section {
+  margin-bottom: 22px;
+}
+
+.eyebrow {
+  margin: 0 0 11px;
+
+  color: #a25c7c;
+  font-size: var(--shed-font-caption, 11px);
+  font-weight: 700;
+  line-height: 1.6;
+  letter-spacing: 0.8px;
+}
+
+.welcome-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+
+  gap: 14px;
+
+  h1 {
+    margin: 0 0 9px;
+
+    font-size: var(--shed-font-page, 28px);
+    line-height: 1.3;
+  }
+}
+
+.welcome-copy {
+  flex: 1;
+  min-width: 0;
+}
+
+.welcome-description {
+  max-width: 480px;
+  margin: 0;
+
+  color: var(--shed-muted, #806778);
+  font-size: var(--shed-font-body, 14px);
+  font-weight: 500;
+  line-height: 1.8;
+}
+
+.welcome-icon {
+  width: 54px;
+  height: 54px;
+  flex-shrink: 0;
+
+  display: grid;
+  place-items: center;
+
+  border-radius: 17px;
+  background: #f9e1eb;
+  color: #ad587f;
+
+  ion-icon {
+    font-size: 27px;
+  }
+}
+
+/* =========================================
+   STORAGE FEEDBACK
+========================================= */
+
+.storage-feedback {
+  margin: 0 0 18px;
+  padding: 14px;
+
+  border: 1px solid #f0b4c5;
+  border-radius: 13px;
+
+  background: #fff0f4;
+  color: #a64265;
+
+  font-size: var(--shed-font-support, 12px);
+  line-height: 1.7;
+}
+
+/* =========================================
+   COMMON CARDS
+========================================= */
+
+ion-card {
+  margin: 0;
+
+  --background: #ffffff;
+  --color: var(--shed-text, #513447);
+
+  border: 1px solid var(--shed-border, #eedde6);
+  border-radius: var(--shed-radius-card, 20px);
+
+  box-shadow:
+    0 5px 18px rgba(91, 51, 72, 0.05);
+}
+
+.next-period-card ion-card-content,
+.recent-card ion-card-content,
+.wellness-tip-card ion-card-content {
+  padding: var(--shed-space-card, 20px);
+}
+
+/* =========================================
+   NEXT PERIOD ESTIMATE
+========================================= */
+
+.next-period-card {
+  margin-bottom: var(
+    --shed-space-section,
+    28px
+  );
+
+  --background: var(--shed-pink, #f6c9d8);
+
+  border-color: #efbdd0;
+}
+
+.card-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.card-label {
+  color: #704359;
+
+  font-size: var(--shed-font-caption, 11px);
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  line-height: 1.6;
+}
+
+.card-heading-icon {
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+
+  display: grid;
+  place-items: center;
+
+  border-radius: 13px;
+  background: rgba(255, 255, 255, 0.58);
+  color: #a64b77;
+
+  ion-icon {
+    font-size: 22px;
+  }
+}
+
+.estimated-date {
+  margin: 0 0 12px;
+
+  color: var(--shed-text, #513447);
+  font-size: var(--shed-font-stat, 28px);
+  line-height: 1.3;
+}
+
+.countdown-text {
+  margin: 0;
+
+  color: #714a60;
+  font-size: var(--shed-font-body, 14px);
+  line-height: 1.8;
+
+  strong {
+    font-weight: 700;
+  }
+}
+
+.prediction-note {
+  margin: 16px 0 12px;
+  padding-top: 14px;
+
+  border-top: 1px solid
+    rgba(112, 67, 89, 0.16);
+
+  color: #80596b;
+
+  font-size: var(--shed-font-support, 12px);
+  line-height: 1.7;
+}
+
+.calendar-link,
+.history-link {
+  margin: 8px 0 0;
+
+  --color: #923e68;
+  --padding-start: 0;
+  --padding-end: 4px;
+
+  font-family: var(
+    --shed-body,
+    'Comfortaa',
+    sans-serif
+  );
+
+  font-size: var(--shed-font-button, 13px);
+  font-weight: 700;
+  text-transform: none;
+
+  ion-icon {
+    font-size: 17px;
+  }
+}
+
+/* =========================================
+   SECTION HEADINGS
+========================================= */
+
+.section-title {
+  margin: 0 0 16px;
+
+  font-size: var(--shed-font-section, 21px);
+  font-weight: 600;
+  line-height: 1.35;
+
+  color: var(--shed-text, #513447);
+}
+
+.overview-section,
+.recent-section,
+.quick-actions-section {
+  margin-bottom: var(
+    --shed-space-section,
+    28px
+  );
+}
+
+/* =========================================
+   CYCLE OVERVIEW GRID
+========================================= */
+
+.overview-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+
+  gap: var(--shed-space-md, 12px);
+}
+
+/* =========================================
+   CYCLE OVERVIEW CARDS
+========================================= */
+
+.overview-card {
+  min-width: 0;
+  min-height: 164px;
+
+  padding: 16px;
+  box-sizing: border-box;
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  border: 1px solid var(--shed-border, #eedde6);
+  border-radius: 19px;
+
+  /* SHED THEME:
+     Colors belong to dashboard cards,
+     NOT menstrual cycle phase colors. */
+
+  &.overview-records {
+    background: #fbe4ed;
+  }
+
+  &.overview-duration {
+    background: #f2e7f1;
+  }
+
+  &.overview-cycle {
+    background: #f8e3ec;
+  }
+
+  &.overview-last-start {
+    background: #ecdfeb;
+  }
+
+  .overview-icon {
+    width: 38px;
+    height: 38px;
+
+    display: grid;
+    place-items: center;
+
+    margin-bottom: 14px;
+    border-radius: 12px;
+
+    background: rgba(255, 255, 255, 0.7);
+    color: #a4537d;
+
+    ion-icon {
+      font-size: 21px;
+    }
+  }
+
+  .overview-label {
+    margin: 0 0 10px;
+
+    color: #765367;
+
+    font-size: var(--shed-font-support, 12px);
+    font-weight: 700;
+    line-height: 1.6;
+  }
+
+  h3 {
+    margin: 0 0 8px;
+
+    color: var(--shed-text, #513447);
+    font-size: var(--shed-font-stat, 28px);
+    font-weight: 600;
+    line-height: 1.2;
+
+    small {
+      font-family: var(
+        --shed-body,
+        'Comfortaa',
+        sans-serif
+      );
+
+      font-size: var(--shed-font-support, 12px);
+      font-weight: 700;
+    }
+  }
+
+  .overview-description {
+    margin-top: auto;
+
+    color: #896d7b;
+
+    font-size: var(--shed-font-caption, 11px);
+    font-weight: 500;
+    line-height: 1.6;
+  }
+}
+
+.overview-card .last-period-date {
+  font-size: var(--shed-font-card, 18px);
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+}
+
+/* =========================================
+   RECENT PERIOD
+========================================= */
+
+.recent-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+
+  gap: 10px;
+  margin-bottom: 16px;
+
+  h3 {
+    margin: 0;
+
+    color: var(--shed-text, #513447);
+    font-size: var(--shed-font-card, 18px);
+    font-weight: 600;
+  }
+}
+
+.record-badge {
+  display: inline-flex;
+  align-items: center;
+
+  padding: 8px 12px;
+  border-radius: 999px;
+
+  background: #fae5ed;
+  color: #a34b75;
+
+  font-size: var(--shed-font-caption, 11px);
+  font-weight: 700;
+}
+
+.recent-details {
+  p {
+    margin: 10px 0;
+
+    color: var(--shed-muted, #806778);
+
+    font-size: var(--shed-font-body, 14px);
+    line-height: 1.8;
+
+    overflow-wrap: anywhere;
+    white-space: pre-wrap;
+  }
+
+  strong {
+    color: var(--shed-text, #513447);
+    font-weight: 700;
+  }
+}
+
+/* =========================================
+   EMPTY STATE
+========================================= */
+
+.empty-state {
+  padding: 28px 20px;
+
+  border: 1px dashed #e7bed1;
+  border-radius: 20px;
+
+  background: #ffffff;
+  text-align: center;
+
+  .empty-icon {
+    width: 58px;
+    height: 58px;
+
+    display: grid;
+    place-items: center;
+
+    margin: 0 auto 16px;
+    border-radius: 18px;
+
+    background: #fce4ed;
+    color: #ba5b85;
+
+    ion-icon {
+      font-size: 28px;
+    }
+  }
+
+  h3 {
+    margin: 0 0 10px;
+    font-size: var(--shed-font-card, 18px);
+  }
+
+  p {
+    max-width: 400px;
+    margin: 0 auto 18px;
+
+    color: var(--shed-muted, #806778);
+    font-size: var(--shed-font-body, 14px);
+    line-height: 1.8;
+  }
+}
+
+.empty-action {
+  --background: var(--shed-rose, #d76b91);
+  --color: #ffffff;
+  --box-shadow: none;
+
+  min-height: 44px;
+  text-transform: none;
+}
+
+/* =========================================
+   QUICK ACTIONS
+   FIXED CENTERING + DARKER HOVER
+========================================= */
+
+.quick-actions-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr));
+
+  gap: 12px;
+}
+
+.quick-action {
+  display: block;
+
+  width: 100%;
+  height: 95px;
+  margin: 0;
+
+  /* Ionic button variables */
+  --background: #ffffff;
+  --background-hover: #f0d1df;
+  --background-focused: #f0d1df;
+  --background-activated: #e8bfd2;
+
+  --color: #8b5274;
+  --border-radius: 17px;
+
+  --padding-start: 8px;
+  --padding-end: 8px;
+  --padding-top: 8px;
+  --padding-bottom: 8px;
+
+  font-family: var(
+    --shed-body,
+    'Comfortaa',
+    sans-serif
+  );
+
+  font-size: var(--shed-font-support, 12px);
+  font-weight: 700;
+  text-transform: none;
+
+  transition: transform 0.2s ease;
+
+  /* Ionic Shadow DOM native button */
+  &::part(native) {
+    border: 1px solid
+      var(--shed-border, #eedde6);
+
+    border-radius: 17px;
+
+    transition:
+      background-color 0.2s ease,
+      border-color 0.2s ease,
+      box-shadow 0.2s ease;
+  }
+
+  /* Centered HTML wrapper */
+  .quick-action-content {
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    gap: 8px;
+    text-align: center;
+  }
+
+  .quick-action-content ion-icon {
+    display: block;
+
+    margin: 0;
+    padding: 0;
+    flex-shrink: 0;
+
+    font-size: 25px;
+    color: #b65b87;
+  }
+
+  .action-label {
+    display: block;
+    margin: 0;
+
+    color: #8b5274;
+
+    font-family: var(
+      --shed-body,
+      'Comfortaa',
+      sans-serif
+    );
+
+    font-size: var(--shed-font-support, 12px);
+    font-weight: 700;
+    line-height: 1.4;
+
+    text-align: center;
+    white-space: normal;
+  }
+
+  /* Mouse hover */
+  @media (hover: hover) {
+    &:hover {
+      --background: #f0d1df;
+      --color: #873b61;
+    }
+
+    &:hover::part(native) {
+      border-color: #d6a1bb;
+
+      box-shadow:
+        0 5px 14px
+        rgba(183, 84, 127, 0.14);
+    }
+
+    &:hover ion-icon,
+    &:hover .action-label {
+      color: #873b61;
+    }
+  }
+
+  &:active {
+    transform: scale(0.98);
+  }
+}
+
+/* =========================================
+   WELLNESS REMINDER
+========================================= */
+
+.wellness-tip-card {
+  margin-bottom: 12px;
+
+  --background: #f4e8f1;
+
+  p {
+    margin: 0;
+
+    color: #795b70;
+
+    font-size: var(--shed-font-body, 14px);
+    line-height: 1.8;
+  }
+}
+
+.wellness-tip-heading {
+  display: flex;
+  align-items: center;
+
+  gap: 12px;
+  margin-bottom: 14px;
+
+  h3 {
+    margin: 0;
+
+    font-size: var(--shed-font-card, 18px);
+    font-weight: 600;
+  }
+}
+
+.tip-icon {
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+
+  display: grid;
+  place-items: center;
+
+  border-radius: 12px;
+  background: #ffffff;
+  color: #a65e8b;
+
+  ion-icon {
+    font-size: 21px;
+  }
+}
+
+/* =========================================
+   RESPONSIVE - MOBILE
+========================================= */
+
+@media (max-width: 480px) {
+  .dashboard-container {
+    padding: 18px 12px 95px;
+  }
+
+  .welcome-icon {
+    width: 48px;
+    height: 48px;
+  }
+
+  .overview-grid {
+    gap: 10px;
+  }
+
+  .overview-card {
+    padding: 14px 12px;
+    min-height: 160px;
+  }
+
+  .quick-actions-grid {
+    gap: 8px;
+  }
+
+  .quick-action {
+    height: 88px;
+
+    .quick-action-content {
+      gap: 7px;
+    }
+
+    .quick-action-content ion-icon {
+      font-size: 23px;
+    }
+  }
+}
+
+/* =========================================
+   RESPONSIVE - SMALL PHONES
+========================================= */
+
+@media (max-width: 360px) {
+  .dashboard-container {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  .overview-card {
+    padding: 12px 10px;
+  }
+
+  .quick-action {
+    --padding-start: 4px;
+    --padding-end: 4px;
+
+    .action-label {
+      font-size: 11px;
+    }
+  }
+}
+
+/* =========================================
+   ACCESSIBILITY
+========================================= */
+
+.quick-action:focus-visible {
+  outline: 2px solid
+    var(--shed-rose, #d76b91);
+
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .quick-action,
+  .quick-action::part(native) {
+    transition: none;
+  }
+}

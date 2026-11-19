@@ -1,0 +1,541 @@
+
+<!-- ========================================
+     SHED - DASHBOARD
+======================================== -->
+
+<ion-header>
+  <ion-toolbar class="dashboard-toolbar">
+    <ion-title>
+      <span class="app-name">shed.</span>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="dashboard-content">
+
+  <main class="dashboard-container">
+
+    <!-- ====================================
+         WELCOME SECTION
+    ==================================== -->
+
+    <section class="welcome-section">
+
+      <div class="welcome-text">
+
+        <p class="eyebrow">
+          SHED · YOUR CYCLE COMPANION
+        </p>
+
+        <div class="welcome-heading">
+
+          <div class="welcome-copy">
+            <h1>Hello, lovely!</h1>
+
+            <p class="welcome-description">
+              Take a moment to understand
+              your cycle and care for yourself.
+            </p>
+          </div>
+
+          <div
+            class="welcome-icon"
+            aria-hidden="true">
+
+            <ion-icon name="flower-outline">
+            </ion-icon>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- ====================================
+         STORAGE FEEDBACK
+    ==================================== -->
+
+    @if (storageMessage) {
+
+      <p
+        class="storage-feedback"
+        role="status">
+
+        {{ storageMessage }}
+
+      </p>
+
+    }
+
+    <!-- ====================================
+         NEXT PERIOD ESTIMATE
+    ==================================== -->
+
+    <ion-card class="next-period-card">
+      <ion-card-content>
+
+        <div class="card-heading">
+
+          <span class="card-label">
+            NEXT PERIOD ESTIMATE
+          </span>
+
+          <div
+            class="card-heading-icon"
+            aria-hidden="true">
+
+            <ion-icon name="calendar-outline">
+            </ion-icon>
+
+          </div>
+
+        </div>
+
+        @if (nextPeriodDate) {
+
+          <h2 class="estimated-date">
+            {{ formatDate(nextPeriodDate) }}
+          </h2>
+
+          <p class="countdown-text">
+
+            @if (daysUntilPeriod === 0) {
+
+              Estimated to start today
+
+            } @else {
+
+              Approximately
+              <strong>{{ daysUntilPeriod }}</strong>
+              days remaining
+
+            }
+
+          </p>
+
+        } @else {
+
+          <h2 class="estimated-date">
+            Not available yet
+          </h2>
+
+          <p class="countdown-text">
+            Log at least two consecutive
+            periods to calculate an
+            upcoming estimate.
+            Estimates may also become outdated.
+          </p>
+
+        }
+
+        <p class="prediction-note">
+          Cycle predictions are estimates only.
+          Actual periods may vary.
+        </p>
+
+        <ion-button
+          class="calendar-link"
+          fill="clear"
+          size="small"
+          routerLink="/tabs/calendar">
+
+          View Calendar
+
+          <ion-icon
+            name="arrow-forward-outline"
+            slot="end">
+          </ion-icon>
+
+        </ion-button>
+
+      </ion-card-content>
+    </ion-card>
+
+    <!-- ====================================
+         CYCLE OVERVIEW
+    ==================================== -->
+
+    <section class="overview-section">
+
+      <h2 class="section-title">
+        Your Cycle Overview
+      </h2>
+
+      <div class="overview-grid">
+
+        <!-- RECORDED PERIODS -->
+
+        <div class="overview-card overview-records">
+
+          <div
+            class="overview-icon"
+            aria-hidden="true">
+
+            <ion-icon name="calendar-number-outline">
+            </ion-icon>
+
+          </div>
+
+          <p class="overview-label">
+            Recorded Periods
+          </p>
+
+          <h3>{{ totalPeriods }}</h3>
+
+          <span class="overview-description">
+            Total entries
+          </span>
+
+        </div>
+
+        <!-- LATEST PERIOD LENGTH -->
+
+        <div class="overview-card overview-duration">
+
+          <div
+            class="overview-icon"
+            aria-hidden="true">
+
+            <ion-icon name="time-outline">
+            </ion-icon>
+
+          </div>
+
+          <p class="overview-label">
+            Latest Period Length
+          </p>
+
+          <h3>
+
+            @if (latestPeriodDuration !== null) {
+
+              {{ latestPeriodDuration }}
+              <small>days</small>
+
+            } @else {
+
+              —
+
+            }
+
+          </h3>
+
+          <span class="overview-description">
+            Latest recorded period
+          </span>
+
+        </div>
+
+        <!-- AVERAGE CYCLE LENGTH -->
+
+        <div class="overview-card overview-cycle">
+
+          <div
+            class="overview-icon"
+            aria-hidden="true">
+
+            <ion-icon name="analytics-outline">
+            </ion-icon>
+
+          </div>
+
+          <p class="overview-label">
+            Average Cycle Length
+          </p>
+
+          <h3>
+
+            @if (averageCycleLength !== null) {
+
+              {{ averageCycleLength }}
+              <small>days</small>
+
+            } @else {
+
+              —
+
+            }
+
+          </h3>
+
+          <span class="overview-description">
+            Based on cycle history
+          </span>
+
+        </div>
+
+        <!-- LAST PERIOD START -->
+
+        <div class="overview-card overview-last-start">
+
+          <div
+            class="overview-icon"
+            aria-hidden="true">
+
+            <ion-icon name="heart-outline">
+            </ion-icon>
+
+          </div>
+
+          <p class="overview-label">
+            Last Period Started
+          </p>
+
+          <h3 class="last-period-date">
+
+            @if (latestPeriod) {
+
+              {{ formatDate(latestPeriod.startDate) }}
+
+            } @else {
+
+              —
+
+            }
+
+          </h3>
+
+          <span class="overview-description">
+            Most recent entry
+          </span>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- ====================================
+         RECENT PERIOD
+    ==================================== -->
+
+    <section class="recent-section">
+
+      <h2 class="section-title">
+        Recent Period
+      </h2>
+
+      @if (latestPeriod) {
+
+        <ion-card class="recent-card">
+          <ion-card-content>
+
+            <div class="recent-header">
+
+              <h3>
+                {{ formatDate(latestPeriod.startDate) }}
+              </h3>
+
+              <span class="record-badge">
+                Recorded
+              </span>
+
+            </div>
+
+            <div class="recent-details">
+
+              <p>
+                <strong>End:</strong>
+                {{ formatDate(latestPeriod.endDate) }}
+              </p>
+
+              <p>
+                <strong>Duration:</strong>
+                {{ latestPeriodDuration }} days
+              </p>
+
+              <p>
+                <strong>Flow:</strong>
+                {{ latestPeriod.flow }}
+              </p>
+
+              @if (latestPeriod.notes) {
+
+                <p>
+                  <strong>Notes:</strong>
+                  {{ latestPeriod.notes }}
+                </p>
+
+              }
+
+            </div>
+
+            <ion-button
+              class="history-link"
+              fill="clear"
+              size="small"
+              routerLink="/tabs/history">
+
+              View History
+
+              <ion-icon
+                name="arrow-forward-outline"
+                slot="end">
+              </ion-icon>
+
+            </ion-button>
+
+          </ion-card-content>
+        </ion-card>
+
+      } @else {
+
+        <div class="empty-state">
+
+          <div
+            class="empty-icon"
+            aria-hidden="true">
+
+            <ion-icon name="calendar-outline">
+            </ion-icon>
+
+          </div>
+
+          <h3>No period records yet</h3>
+
+          <p>
+            Start tracking your cycle by
+            logging your first period.
+          </p>
+
+          <ion-button
+            class="empty-action"
+            routerLink="/tabs/track">
+
+            <ion-icon
+              name="add-circle-outline"
+              slot="start">
+            </ion-icon>
+
+            Log Your First Period
+
+          </ion-button>
+
+        </div>
+
+      }
+
+    </section>
+
+    <!-- ====================================
+         QUICK ACTIONS
+    ==================================== -->
+
+    <section class="quick-actions-section">
+
+      <h2 class="section-title">
+        Quick Actions
+      </h2>
+
+      <div class="quick-actions-grid">
+
+        <!-- LOG PERIOD -->
+
+        <ion-button
+          class="quick-action"
+          fill="clear"
+          routerLink="/tabs/track"
+          aria-label="Log Period">
+
+          <div class="quick-action-content">
+
+            <ion-icon
+              name="add-circle-outline"
+              aria-hidden="true">
+            </ion-icon>
+
+            <span class="action-label">
+              Log Period
+            </span>
+
+          </div>
+
+        </ion-button>
+
+        <!-- CALENDAR -->
+
+        <ion-button
+          class="quick-action"
+          fill="clear"
+          routerLink="/tabs/calendar"
+          aria-label="Open Calendar">
+
+          <div class="quick-action-content">
+
+            <ion-icon
+              name="calendar-outline"
+              aria-hidden="true">
+            </ion-icon>
+
+            <span class="action-label">
+              Calendar
+            </span>
+
+          </div>
+
+        </ion-button>
+
+        <!-- HISTORY -->
+
+        <ion-button
+          class="quick-action"
+          fill="clear"
+          routerLink="/tabs/history"
+          aria-label="View History">
+
+          <div class="quick-action-content">
+
+            <ion-icon
+              name="book-outline"
+              aria-hidden="true">
+            </ion-icon>
+
+            <span class="action-label">
+              History
+            </span>
+
+          </div>
+
+        </ion-button>
+
+      </div>
+
+    </section>
+
+    <!-- ====================================
+         WELLNESS REMINDER
+    ==================================== -->
+
+    <ion-card class="wellness-tip-card">
+      <ion-card-content>
+
+        <div class="wellness-tip-heading">
+
+          <div
+            class="tip-icon"
+            aria-hidden="true">
+
+            <ion-icon name="sparkles-outline">
+            </ion-icon>
+
+          </div>
+
+          <h3>A Gentle Reminder</h3>
+
+        </div>
+
+        <p>
+          Every cycle is unique.
+          Keep track of your symptoms,
+          listen to your body,
+          and prioritize your well-being.
+        </p>
+
+      </ion-card-content>
+    </ion-card>
+
+  </main>
+
+</ion-content>

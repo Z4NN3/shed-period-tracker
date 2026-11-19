@@ -1,0 +1,484 @@
+
+<!-- SHED - CYCLE CALENDAR -->
+
+<ion-header>
+  <ion-toolbar class="calendar-toolbar">
+    <ion-title>
+      <span class="app-name">shed.</span>
+      <span class="toolbar-subtitle">Calendar</span>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="calendar-content">
+  <main class="calendar-container">
+
+    <!-- PAGE INTRODUCTION -->
+    <section class="calendar-intro">
+      <p class="eyebrow">
+        SHED · YOUR CYCLE COMPANION
+      </p>
+
+      <div class="intro-heading">
+        <div>
+          <h1>My Cycle Calendar</h1>
+
+          <p class="intro-description">
+            Explore your menstrual history,
+            cycle phases, and estimated dates.
+          </p>
+        </div>
+
+        <div
+          class="intro-icon"
+          aria-hidden="true">
+
+          <ion-icon name="calendar-outline">
+          </ion-icon>
+        </div>
+      </div>
+    </section>
+
+    <!-- CYCLE SUMMARY -->
+    <section class="cycle-summary">
+
+      <!-- AVERAGE CYCLE -->
+      <div class="summary-card average">
+        <div class="summary-icon">
+          <ion-icon
+            name="time-outline"
+            aria-hidden="true">
+          </ion-icon>
+        </div>
+
+        <span class="summary-label">
+          Average Cycle
+        </span>
+
+        <strong class="summary-value">
+          @if (averageCycleLength !== null) {
+            {{ averageCycleLength }}
+            <small>days</small>
+          } @else {
+            —
+          }
+        </strong>
+
+        <p>Based on your period history</p>
+      </div>
+
+      <!-- NEXT PERIOD -->
+      <div class="summary-card next">
+        <div class="summary-icon">
+          <ion-icon
+            name="calendar-number-outline"
+            aria-hidden="true">
+          </ion-icon>
+        </div>
+
+        <span class="summary-label">
+          Next Period Estimate
+        </span>
+
+        <strong class="summary-value next-date">
+          @if (estimatedNextPeriod) {
+            {{ formatDisplayDate(estimatedNextPeriod) }}
+          } @else {
+            Not available
+          }
+        </strong>
+
+        <p>
+          Prediction based on recorded cycles
+        </p>
+      </div>
+
+    </section>
+
+    <!-- PHASE CALENDAR -->
+    <ion-card class="calendar-card">
+      <ion-card-content>
+
+        <!-- MONTH NAVIGATION -->
+        <div class="calendar-header">
+          <button
+            type="button"
+            class="month-nav"
+            aria-label="Previous month"
+            (click)="previousMonth()">
+
+            <ion-icon name="chevron-back-outline">
+            </ion-icon>
+          </button>
+
+          <h2>{{ monthTitle }}</h2>
+
+          <button
+            type="button"
+            class="month-nav"
+            aria-label="Next month"
+            (click)="nextMonth()">
+
+            <ion-icon name="chevron-forward-outline">
+            </ion-icon>
+          </button>
+        </div>
+
+        <!-- CALENDAR GRID -->
+        <div class="calendar-grid">
+
+          @for (weekday of weekdays; track weekday) {
+            <div class="weekday">
+              {{ weekday }}
+            </div>
+          }
+
+          @for (day of calendarDays; track $index) {
+
+            @if (day) {
+              <button
+                type="button"
+                class="calendar-day"
+                [class.menstruation]="getPhase(day) === 'menstruation'"
+                [class.follicular]="getPhase(day) === 'follicular'"
+                [class.ovulation]="getPhase(day) === 'ovulation'"
+                [class.luteal]="getPhase(day) === 'luteal'"
+                [class.recorded]="getRecordedPeriod(day) !== null"
+                [class.today]="day === todayDate"
+                [class.selected]="day === selectedDate"
+                [attr.aria-label]="
+                  formatDisplayDate(day) +
+                  ', ' +
+                  (getPhaseInfo(day)?.name ?? 'No phase estimate')
+                "
+                [attr.aria-pressed]="day === selectedDate"
+                (click)="selectDate(day)">
+
+                {{ +day.slice(8, 10) }}
+              </button>
+            } @else {
+              <div
+                class="calendar-empty"
+                aria-hidden="true">
+              </div>
+            }
+          }
+
+        </div>
+
+        <!-- CYCLE PHASE LEGEND -->
+        <div class="calendar-legend">
+          @for (phase of phases; track phase.name) {
+            <div class="legend-item">
+              <span
+                class="legend-dot"
+                [ngClass]="phase.cssClass">
+              </span>
+
+              <span>{{ phase.name }}</span>
+            </div>
+          }
+        </div>
+
+        <!-- GO TO TODAY -->
+        <div class="calendar-actions">
+          <ion-button
+            expand="block"
+            fill="outline"
+            class="today-button"
+            (click)="goToToday()">
+
+            <ion-icon
+              name="today-outline"
+              slot="start">
+            </ion-icon>
+
+            Go to Today
+          </ion-button>
+        </div>
+
+        <p class="calendar-hint">
+          Outlined dates indicate today or
+          the selected date. Actual recorded
+          periods remain visible. Estimated
+          phase colors are hidden when the
+          prediction becomes outdated.
+        </p>
+
+      </ion-card-content>
+    </ion-card>
+
+    <!-- SELECTED DATE DETAILS -->
+    <section class="selected-date-section">
+      <h2 class="section-title">
+        Selected Date
+      </h2>
+
+      <ion-card class="details-card">
+        <ion-card-content>
+
+          <div class="selected-date-heading">
+            <div class="selected-date-icon">
+              <ion-icon
+                name="calendar-outline"
+                aria-hidden="true">
+              </ion-icon>
+            </div>
+
+            <div>
+              <p>DATE DETAILS</p>
+
+              <h3>
+                {{ formatDisplayDate(selectedDate) }}
+              </h3>
+            </div>
+          </div>
+
+          <!-- PHASE INFORMATION -->
+          @if (selectedPhase; as phase) {
+
+            <div
+              class="phase-status"
+              [class.menstruation]="getPhase(selectedDate) === 'menstruation'"
+              [class.follicular]="getPhase(selectedDate) === 'follicular'"
+              [class.ovulation]="getPhase(selectedDate) === 'ovulation'"
+              [class.luteal]="getPhase(selectedDate) === 'luteal'">
+
+              <ion-icon
+                name="flower-outline"
+                aria-hidden="true">
+              </ion-icon>
+
+              <span>{{ phase.name }}</span>
+
+              @if (phase.estimated) {
+                <span class="phase-type">
+                  · Estimated
+                </span>
+              } @else {
+                <span class="phase-type">
+                  · Recorded
+                </span>
+              }
+            </div>
+
+            <p class="phase-description">
+              {{ phase.description }}
+            </p>
+
+          } @else {
+
+            <div class="unavailable-state">
+              <ion-icon
+                name="information-circle-outline"
+                aria-hidden="true">
+              </ion-icon>
+
+              <p>
+                No cycle phase estimate is
+                available for this date.
+              </p>
+            </div>
+
+          }
+
+          <!-- RECORDED PERIOD -->
+          @if (selectedPeriod; as period) {
+
+            <div class="recorded-details">
+              <h4>
+                <ion-icon
+                  name="water-outline"
+                  aria-hidden="true">
+                </ion-icon>
+
+                Recorded Period Details
+              </h4>
+
+              <div class="detail-row">
+                <span>Start Date</span>
+
+                <strong>
+                  {{ formatDisplayDate(period.startDate) }}
+                </strong>
+              </div>
+
+              <div class="detail-row">
+                <span>End Date</span>
+
+                <strong>
+                  {{ formatDisplayDate(period.endDate) }}
+                </strong>
+              </div>
+
+              <div class="detail-row">
+                <span>Flow Intensity</span>
+                <strong>{{ period.flow }}</strong>
+              </div>
+
+              @if (period.notes) {
+                <div class="recorded-notes">
+                  <span>Notes</span>
+                  <p>{{ period.notes }}</p>
+                </div>
+              }
+            </div>
+
+            <ion-button
+              fill="clear"
+              class="text-link"
+              routerLink="/tabs/history">
+
+              View Period History
+
+              <ion-icon
+                slot="end"
+                name="arrow-forward-outline">
+              </ion-icon>
+            </ion-button>
+
+          } @else {
+
+            <ion-button
+              fill="outline"
+              class="log-button"
+              routerLink="/tabs/track">
+
+              <ion-icon
+                slot="start"
+                name="add-circle-outline">
+              </ion-icon>
+
+              Log Your Period
+            </ion-button>
+
+          }
+
+        </ion-card-content>
+      </ion-card>
+    </section>
+
+    <!-- ESTIMATED PHASE RANGES -->
+    <section class="phase-section">
+      <h2 class="section-title">
+        Estimated Cycle Phases
+      </h2>
+
+      @if (phaseRanges.length > 0) {
+
+        <p class="section-description">
+          Estimated dates for your next
+          modeled menstrual cycle.
+        </p>
+
+        <div class="phase-list">
+          @for (phase of phaseRanges; track phase.name) {
+            <div
+              class="phase-range-card"
+              [ngClass]="phase.cssClass">
+
+              <div class="phase-range-heading">
+                <span class="phase-indicator">
+                </span>
+
+                <strong>{{ phase.name }}</strong>
+              </div>
+
+              <p>
+                {{ formatDateRange(
+                  phase.start,
+                  phase.end
+                ) }}
+              </p>
+            </div>
+          }
+        </div>
+
+      } @else {
+
+        <div class="empty-estimate">
+          <div class="empty-estimate-icon">
+            <ion-icon
+              name="calendar-outline"
+              aria-hidden="true">
+            </ion-icon>
+          </div>
+
+          <h3>Phase estimates unavailable</h3>
+
+          <p>
+            {{ estimateUnavailableMessage }}
+          </p>
+
+          <p>
+            Predictions are approximate
+            and cannot confirm ovulation
+            or fertility.
+          </p>
+
+          <ion-button
+            class="primary-button"
+            routerLink="/tabs/track">
+
+            <ion-icon
+              slot="start"
+              name="add-circle-outline">
+            </ion-icon>
+
+            Log Period
+          </ion-button>
+        </div>
+
+      }
+    </section>
+
+    <!-- UNDERSTANDING YOUR CYCLE -->
+    <section class="phase-guide">
+      <h2 class="section-title">
+        Understanding Your Cycle
+      </h2>
+
+      <div class="phase-guide-grid">
+        @for (phase of phases; track phase.name) {
+          <div class="guide-card">
+            <span
+              class="guide-color"
+              [ngClass]="phase.cssClass">
+            </span>
+
+            <div>
+              <h3>{{ phase.name }}</h3>
+              <p>{{ phase.description }}</p>
+            </div>
+          </div>
+        }
+      </div>
+    </section>
+
+    <!-- IMPORTANT INFORMATION -->
+    <div class="calendar-note">
+      <div class="note-heading">
+        <ion-icon
+          name="information-circle-outline"
+          aria-hidden="true">
+        </ion-icon>
+
+        <strong>Important Information</strong>
+      </div>
+
+      <p>
+        These are calendar-based estimates,
+        not confirmed ovulation or fertility
+        dates. Menstruation overlaps the
+        biological follicular phase.
+      </p>
+
+      <p>
+        Do not use these predictions as a
+        method of contraception or to make
+        medical decisions.
+      </p>
+    </div>
+
+  </main>
+</ion-content>

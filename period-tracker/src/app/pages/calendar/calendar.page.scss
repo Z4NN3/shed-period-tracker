@@ -1,0 +1,1002 @@
+
+/* =========================================
+   SHED - CALENDAR
+========================================= */
+
+:host {
+  display: block;
+  color: var(--shed-text, #513447);
+  font-family: var(--shed-body, 'Comfortaa', sans-serif);
+
+  --calendar-ordinary: #f8f4f6;
+  --calendar-today: #9d748b;
+  --calendar-selected: #66394f;
+
+  --phase-menstruation: #e96b9b;
+  --phase-follicular: #f6bdd3;
+  --phase-ovulation: #fdecf3;
+  --phase-luteal: #b96791;
+}
+
+/* =========================================
+   LAYOUT
+========================================= */
+
+.calendar-content {
+  --background: var(--shed-bg, #fffafc);
+  --color: var(--shed-text, #513447);
+}
+
+.calendar-container {
+  max-width: 720px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 22px 16px 100px;
+  box-sizing: border-box;
+
+  h1, h2, h3, h4 {
+    font-family: var(--shed-heading, 'Fredoka', sans-serif);
+    font-weight: 600;
+    color: var(--shed-text, #513447);
+  }
+
+  p, span, strong, button {
+    font-family: var(--shed-body, 'Comfortaa', sans-serif);
+  }
+}
+
+button {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button:focus-visible {
+  outline: 3px solid var(--shed-rose, #d76b91);
+  outline-offset: 2px;
+}
+
+/* =========================================
+   HEADER
+========================================= */
+
+.calendar-toolbar {
+  --background: #ffffff;
+  --color: var(--shed-text, #513447);
+  --border-color: var(--shed-border, #eedde6);
+
+  ion-title {
+    font-family: var(--shed-heading, 'Fredoka', sans-serif);
+    font-size: var(--shed-font-brand, 24px);
+    font-weight: 700;
+  }
+
+  .app-name {
+    color: var(--shed-rose, #d76b91);
+    font-family: var(--shed-heading, 'Fredoka', sans-serif);
+  }
+
+  .toolbar-subtitle {
+    margin-left: 5px;
+    color: var(--shed-muted, #806778);
+    font-family: var(--shed-body, 'Comfortaa', sans-serif);
+    font-size: var(--shed-font-support, 12px);
+    font-weight: 600;
+  }
+}
+
+/* =========================================
+   INTRODUCTION
+========================================= */
+
+.calendar-intro {
+  margin-bottom: 22px;
+}
+
+.eyebrow {
+  margin: 0 0 11px;
+  color: #a25c7c;
+  font-size: var(--shed-font-caption, 11px);
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  line-height: 1.6;
+}
+
+.intro-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 14px;
+
+  h1 {
+    margin: 0 0 9px;
+    font-size: var(--shed-font-page, 28px);
+    line-height: 1.3;
+  }
+}
+
+.intro-description {
+  margin: 0;
+  max-width: 460px;
+  color: var(--shed-muted, #806778);
+  font-size: var(--shed-font-body, 14px);
+  line-height: 1.8;
+}
+
+.intro-icon {
+  width: 54px;
+  height: 54px;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  border-radius: 17px;
+  background: #f9e1eb;
+  color: #ad587f;
+
+  ion-icon {
+    font-size: 27px;
+  }
+}
+
+/* =========================================
+   GENERAL CARDS
+========================================= */
+
+ion-card {
+  margin: 0;
+  --background: #ffffff;
+  --color: var(--shed-text, #513447);
+  border: 1px solid var(--shed-border, #eedde6);
+  border-radius: var(--shed-radius-card, 20px);
+  box-shadow: 0 5px 18px rgba(91, 51, 72, 0.05);
+}
+
+.calendar-card ion-card-content,
+.details-card ion-card-content {
+  padding: var(--shed-space-card, 20px);
+}
+
+/* =========================================
+   CYCLE SUMMARY
+========================================= */
+
+.cycle-summary {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin-bottom: var(--shed-space-section, 28px);
+}
+
+.summary-card {
+  min-width: 0;
+  min-height: 164px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  border: 1px solid var(--shed-border, #eedde6);
+  border-radius: 19px;
+  box-sizing: border-box;
+
+  &.average {
+    background: #fae9f0;
+  }
+
+  &.next {
+    background: #f3e9f1;
+  }
+
+  .summary-icon {
+    width: 38px;
+    height: 38px;
+    display: grid;
+    place-items: center;
+    margin-bottom: 14px;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.75);
+    color: #a8537d;
+
+    ion-icon {
+      font-size: 21px;
+    }
+  }
+
+  .summary-label {
+    margin-bottom: 10px;
+    color: #765367;
+    font-size: var(--shed-font-support, 12px);
+    font-weight: 700;
+    line-height: 1.6;
+  }
+
+  .summary-value {
+    color: var(--shed-text, #513447);
+    font-family: var(--shed-heading, 'Fredoka', sans-serif);
+    font-size: var(--shed-font-stat, 28px);
+    font-weight: 600;
+    line-height: 1.3;
+    overflow-wrap: anywhere;
+
+    small {
+      font-family: var(--shed-body, 'Comfortaa', sans-serif);
+      font-size: var(--shed-font-support, 12px);
+    }
+  }
+
+  .summary-value.next-date {
+    font-size: var(--shed-font-card, 18px);
+  }
+
+  p {
+    margin: auto 0 0;
+    padding-top: 10px;
+    color: #896d7b;
+    font-size: var(--shed-font-caption, 11px);
+    line-height: 1.6;
+  }
+}
+
+/* =========================================
+   CALENDAR CARD
+========================================= */
+
+.calendar-card {
+  margin-bottom: var(--shed-space-section, 28px);
+  --background: #ffffff;
+}
+
+.calendar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 20px;
+
+  h2 {
+    margin: 0;
+    font-size: var(--shed-font-section, 21px);
+    text-align: center;
+  }
+}
+
+.month-nav {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  border: 1px solid var(--shed-border, #eedde6);
+  border-radius: 12px;
+  background: #fffafc;
+  color: #a5527b;
+  cursor: pointer;
+
+  ion-icon {
+    font-size: 21px;
+  }
+
+  &:hover {
+    background: #faeef3;
+  }
+}
+
+/* =========================================
+   CALENDAR GRID
+========================================= */
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  column-gap: 5px;
+  row-gap: 8px;
+}
+
+.weekday {
+  min-width: 0;
+  padding: 7px 0 10px;
+  color: #907589;
+  font-size: var(--shed-font-caption, 11px);
+  font-weight: 700;
+  text-align: center;
+}
+
+.calendar-empty {
+  min-width: 0;
+  aspect-ratio: 1;
+}
+
+/* =========================================
+   CALENDAR DAY COLORS
+========================================= */
+
+.calendar-day {
+  position: relative;
+  width: 100%;
+  min-width: 0;
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+
+  border: 2px solid transparent;
+  border-radius: 12px;
+
+  /* Ordinary days remain neutral */
+  background: var(--calendar-ordinary);
+  color: #765e6e;
+
+  font-family: var(--shed-body, 'Comfortaa', sans-serif);
+  font-size: var(--shed-font-support, 12px);
+  font-weight: 700;
+  cursor: pointer;
+
+  &.menstruation {
+    background: var(--phase-menstruation);
+    color: #ffffff;
+  }
+
+  &.follicular {
+    background: var(--phase-follicular);
+    color: #583448;
+  }
+
+  &.ovulation {
+    background: var(--phase-ovulation);
+    color: #583448;
+    border-color: #ebc5d5;
+  }
+
+  &.luteal {
+    background: var(--phase-luteal);
+    color: #ffffff;
+  }
+
+  &.recorded::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: 3px;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    transform: translateX(-50%);
+    background: #ffffff;
+  }
+
+  &.today {
+    border-color: var(--calendar-today);
+  }
+
+  &.selected,
+  &.today.selected {
+    border-color: var(--calendar-selected);
+    box-shadow: 0 0 0 2px rgba(102, 57, 79, 0.18);
+  }
+}
+
+/* =========================================
+   PHASE LEGEND
+========================================= */
+
+.calendar-legend {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 22px;
+  padding: 16px 0;
+
+  border-top: 1px solid var(--shed-border, #eedde6);
+  border-bottom: 1px solid var(--shed-border, #eedde6);
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #71566a;
+  font-size: var(--shed-font-caption, 11px);
+  font-weight: 600;
+}
+
+.legend-dot {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+  border-radius: 4px;
+
+  &.menstruation {
+    background: var(--phase-menstruation);
+  }
+
+  &.follicular {
+    background: var(--phase-follicular);
+  }
+
+  &.ovulation {
+    background: var(--phase-ovulation);
+    border: 1px solid #ebc5d5;
+  }
+
+  &.luteal {
+    background: var(--phase-luteal);
+  }
+}
+
+/* =========================================
+   CALENDAR ACTIONS
+========================================= */
+
+.calendar-actions {
+  margin-top: 18px;
+}
+
+.today-button {
+  min-height: 44px;
+
+  --color: #aa527d;
+  --border-color: #edc4d6;
+  --border-width: 1px;
+  --background: #fffafc;
+
+  font-size: var(--shed-font-button, 13px);
+}
+
+.calendar-hint {
+  margin: 15px 0 0;
+  color: var(--shed-muted, #806778);
+  font-size: var(--shed-font-support, 12px);
+  line-height: 1.7;
+  text-align: center;
+}
+
+/* =========================================
+   SECTION TITLES
+========================================= */
+
+.section-title {
+  margin: 0 0 16px;
+  font-size: var(--shed-font-section, 21px);
+  line-height: 1.35;
+}
+
+.selected-date-section,
+.phase-section,
+.phase-guide {
+  margin-bottom: var(--shed-space-section, 28px);
+}
+
+/* =========================================
+   SELECTED DATE
+========================================= */
+
+.selected-date-heading {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 18px;
+
+  p {
+    margin: 0 0 5px;
+    color: #a16b89;
+    font-size: var(--shed-font-caption, 11px);
+    font-weight: 700;
+  }
+
+  h3 {
+    margin: 0;
+    font-size: var(--shed-font-card, 18px);
+  }
+}
+
+.selected-date-icon {
+  width: 43px;
+  height: 43px;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  border-radius: 13px;
+  background: #fae7ef;
+  color: #ab5480;
+
+  ion-icon {
+    font-size: 22px;
+  }
+}
+
+/* =========================================
+   SELECTED DATE PHASE STATUS
+========================================= */
+
+.phase-status {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 5px;
+  width: fit-content;
+  max-width: 100%;
+  padding: 10px 12px;
+  border-radius: 12px;
+
+  font-size: var(--shed-font-support, 12px);
+  font-weight: 700;
+
+  ion-icon {
+    font-size: 16px;
+  }
+
+  &.menstruation {
+    background: var(--phase-menstruation);
+    color: #ffffff;
+  }
+
+  &.follicular {
+    background: var(--phase-follicular);
+    color: #583448;
+  }
+
+  &.ovulation {
+    background: var(--phase-ovulation);
+    color: #583448;
+    border: 1px solid #ebc5d5;
+  }
+
+  &.luteal {
+    background: var(--phase-luteal);
+    color: #ffffff;
+  }
+}
+
+.phase-type {
+  font-size: var(--shed-font-caption, 11px);
+  font-weight: 500;
+}
+
+.phase-description {
+  margin: 13px 0 0;
+  color: var(--shed-muted, #806778);
+  font-size: var(--shed-font-body, 14px);
+  line-height: 1.8;
+}
+
+/* =========================================
+   NO PHASE AVAILABLE
+========================================= */
+
+.unavailable-state {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 14px;
+  border: 1px solid var(--shed-border, #eedde6);
+  border-radius: 13px;
+  background: #fffafc;
+
+  ion-icon {
+    flex-shrink: 0;
+    font-size: 19px;
+    color: var(--shed-mauve, #b784a7);
+  }
+
+  p {
+    margin: 0;
+    color: var(--shed-muted, #806778);
+    font-size: var(--shed-font-body, 14px);
+    line-height: 1.7;
+  }
+}
+
+/* =========================================
+   RECORDED PERIOD DETAILS
+========================================= */
+
+.recorded-details {
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid var(--shed-border, #eedde6);
+
+  h4 {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0 0 16px;
+    font-size: var(--shed-font-card, 18px);
+
+    ion-icon {
+      font-size: 19px;
+      color: #bd648b;
+    }
+  }
+}
+
+.detail-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 12px;
+
+  span,
+  strong {
+    font-size: var(--shed-font-body, 14px);
+    line-height: 1.6;
+  }
+
+  span {
+    color: var(--shed-muted, #806778);
+  }
+
+  strong {
+    color: var(--shed-text, #513447);
+    font-weight: 700;
+    text-align: right;
+  }
+}
+
+.recorded-notes {
+  margin-top: 14px;
+
+  span {
+    color: var(--shed-text, #513447);
+    font-size: var(--shed-font-label, 14px);
+    font-weight: 700;
+  }
+
+  p {
+    margin: 8px 0 0;
+    color: var(--shed-muted, #806778);
+    font-size: var(--shed-font-body, 14px);
+    line-height: 1.8;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+  }
+}
+
+/* =========================================
+   BUTTONS
+========================================= */
+
+/* Text-only navigation link */
+.text-link {
+  margin-top: 14px;
+
+  --color: #a24d77;
+  --padding-start: 0;
+  --padding-end: 4px;
+
+  font-family: var(--shed-body, 'Comfortaa', sans-serif);
+  font-size: var(--shed-font-button, 13px);
+  font-weight: 700;
+}
+
+/* FIX: Log Your Period button */
+.log-button {
+  margin-top: 16px;
+  margin-left: 0;
+
+  --color: #a24d77;
+  --border-color: #edc4d6;
+  --border-width: 1px;
+
+  --background: #ffffff;
+  --background-hover: #f3dce7;
+  --background-focused: #f3dce7;
+  --background-activated: #edcada;
+
+  --border-radius: 13px;
+
+  /* Restore button internal padding */
+  --padding-start: 18px;
+  --padding-end: 18px;
+  --padding-top: 10px;
+  --padding-bottom: 10px;
+
+  min-height: 44px;
+
+  font-family: var(--shed-body, 'Comfortaa', sans-serif);
+  font-size: var(--shed-font-button, 13px);
+  font-weight: 700;
+  text-transform: none;
+
+  &::part(native) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  ion-icon[slot="start"] {
+    margin-inline-start: 0;
+    margin-inline-end: 8px;
+    font-size: 19px;
+    flex-shrink: 0;
+  }
+
+  @media (hover: hover) {
+    &:hover {
+      --color: #873b61;
+      --border-color: #dca4bf;
+    }
+  }
+}
+
+.primary-button {
+  --background: var(--shed-rose, #d76b91);
+  --color: #ffffff;
+  --box-shadow: none;
+  min-height: 44px;
+  font-size: var(--shed-font-button, 13px);
+}
+
+/* =========================================
+   ESTIMATED PHASE RANGES
+========================================= */
+
+.section-description {
+  margin: -4px 0 16px;
+  color: var(--shed-muted, #806778);
+  font-size: var(--shed-font-body, 14px);
+  line-height: 1.8;
+}
+
+.phase-list,
+.phase-guide-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.phase-range-card {
+  min-width: 0;
+  padding: 16px;
+  border: 1px solid var(--shed-border, #eedde6);
+  border-radius: 17px;
+
+  &.menstruation {
+    background: #fbe0ea;
+  }
+
+  &.follicular {
+    background: #fce9f1;
+  }
+
+  &.ovulation {
+    background: #fff7fa;
+  }
+
+  &.luteal {
+    background: #f1dbe7;
+  }
+
+  p {
+    margin: 12px 0 0;
+    color: #6f5969;
+    font-size: var(--shed-font-support, 12px);
+    line-height: 1.7;
+    overflow-wrap: anywhere;
+  }
+}
+
+.phase-range-heading {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  strong {
+    color: #62485a;
+    font-size: var(--shed-font-support, 12px);
+    font-weight: 700;
+  }
+}
+
+.phase-indicator {
+  width: 13px;
+  height: 13px;
+  flex-shrink: 0;
+  border-radius: 4px;
+}
+
+.phase-range-card.menstruation .phase-indicator {
+  background: var(--phase-menstruation);
+}
+
+.phase-range-card.follicular .phase-indicator {
+  background: var(--phase-follicular);
+}
+
+.phase-range-card.ovulation .phase-indicator {
+  background: var(--phase-ovulation);
+  border: 1px solid #ebc5d5;
+}
+
+.phase-range-card.luteal .phase-indicator {
+  background: var(--phase-luteal);
+}
+
+/* =========================================
+   EMPTY ESTIMATE
+========================================= */
+
+.empty-estimate {
+  padding: 28px 20px;
+  border: 1px dashed #e7bed1;
+  border-radius: 19px;
+  background: #ffffff;
+  text-align: center;
+
+  h3 {
+    margin: 0 0 10px;
+    font-size: var(--shed-font-card, 18px);
+  }
+
+  p {
+    max-width: 420px;
+    margin: 0 auto 12px;
+    color: var(--shed-muted, #806778);
+    font-size: var(--shed-font-body, 14px);
+    line-height: 1.8;
+  }
+
+  ion-button {
+    margin-top: 12px;
+  }
+}
+
+.empty-estimate-icon {
+  width: 55px;
+  height: 55px;
+  display: grid;
+  place-items: center;
+  margin: 0 auto 16px;
+  border-radius: 17px;
+  background: #fae7ef;
+  color: #b15c83;
+
+  ion-icon {
+    font-size: 27px;
+  }
+}
+
+/* =========================================
+   CYCLE PHASE GUIDE
+========================================= */
+
+.guide-card {
+  min-width: 0;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 16px;
+  border: 1px solid var(--shed-border, #eedde6);
+  border-radius: 17px;
+  background: #ffffff;
+
+  h3 {
+    margin: 0 0 8px;
+    font-size: var(--shed-font-card, 18px);
+  }
+
+  p {
+    margin: 0;
+    color: var(--shed-muted, #806778);
+    font-size: var(--shed-font-support, 12px);
+    line-height: 1.7;
+  }
+}
+
+.guide-color {
+  width: 13px;
+  height: 34px;
+  flex-shrink: 0;
+  border-radius: 6px;
+
+  &.menstruation {
+    background: var(--phase-menstruation);
+  }
+
+  &.follicular {
+    background: var(--phase-follicular);
+  }
+
+  &.ovulation {
+    background: var(--phase-ovulation);
+    border: 1px solid #ebc5d5;
+  }
+
+  &.luteal {
+    background: var(--phase-luteal);
+  }
+}
+
+/* =========================================
+   IMPORTANT NOTE
+========================================= */
+
+.calendar-note {
+  padding: var(--shed-space-card, 20px);
+  border: 1px solid var(--shed-border, #eedde6);
+  border-radius: 18px;
+  background: #f7eef4;
+
+  p {
+    margin: 10px 0 0;
+    color: #795c70;
+    font-size: var(--shed-font-body, 14px);
+    line-height: 1.8;
+  }
+}
+
+.note-heading {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  color: #74516b;
+
+  ion-icon {
+    color: #a66891;
+    font-size: 20px;
+  }
+
+  strong {
+    font-family: var(--shed-heading, 'Fredoka', sans-serif);
+    font-size: var(--shed-font-card, 18px);
+  }
+}
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 480px) {
+  .calendar-container {
+    padding: 18px 12px 95px;
+  }
+
+  .intro-icon {
+    width: 48px;
+    height: 48px;
+  }
+
+  .calendar-card ion-card-content {
+    padding: 16px 12px;
+  }
+
+  .calendar-grid {
+    gap: 5px 3px;
+  }
+
+  .calendar-day {
+    font-size: 11px;
+    border-radius: 10px;
+  }
+
+  .phase-list,
+  .phase-guide-grid {
+    gap: 10px;
+  }
+
+  .phase-range-card,
+  .guide-card {
+    padding: 13px 11px;
+  }
+}
+
+@media (max-width: 360px) {
+  .calendar-container {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  .calendar-card ion-card-content {
+    padding: 14px 9px;
+  }
+
+  .calendar-grid {
+    column-gap: 2px;
+  }
+
+  .calendar-day {
+    font-size: 10px;
+  }
+
+  .phase-guide-grid {
+    grid-template-columns: 1fr;
+  }
+}

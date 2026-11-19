@@ -1,0 +1,328 @@
+
+/*
+ * SHED - GLOBAL STYLES
+ * Ionic Angular + Capacitor
+ */
+
+/* =========================================
+   IONIC CORE CSS
+========================================= */
+
+@import "@ionic/angular/css/core.css";
+
+@import "@ionic/angular/css/normalize.css";
+@import "@ionic/angular/css/structure.css";
+@import "@ionic/angular/css/typography.css";
+@import "@ionic/angular/css/display.css";
+
+@import "@ionic/angular/css/padding.css";
+@import "@ionic/angular/css/float-elements.css";
+@import "@ionic/angular/css/text-alignment.css";
+@import "@ionic/angular/css/text-transformation.css";
+@import "@ionic/angular/css/flex-utils.css";
+
+/*
+ * SHED USES A LIGHT THEME.
+ *
+ * Do not import dark.system.css here.
+ * It can change Ionic component colors
+ * when the Android device uses dark mode.
+ */
+
+/* =========================================
+   SHED FONTS
+========================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;500;600;700&family=Fredoka:wght@400;500;600;700&display=swap');
+
+/* =========================================
+   SHED GLOBAL DESIGN SYSTEM
+========================================= */
+
+:root {
+
+  /* KEEP SHED IN LIGHT MODE */
+  color-scheme: light;
+
+  --ion-background-color: #fffafc;
+  --ion-text-color: #513447;
+
+  /* BRAND COLORS */
+  --shed-pink: #f6c9d8;
+  --shed-mauve: #b784a7;
+  --shed-rose: #d76b91;
+
+  --shed-bg: #fffafc;
+  --shed-white: #ffffff;
+  --shed-text: #513447;
+  --shed-muted: #806778;
+  --shed-border: #eedde6;
+
+  /* CALENDAR PHASES */
+  --phase-menstruation: #e96b9b;
+  --phase-follicular: #f6bdd3;
+  --phase-ovulation: #fdecf3;
+  --phase-luteal: #b96791;
+
+  /* FONTS */
+  --shed-heading: 'Fredoka', sans-serif;
+  --shed-body: 'Comfortaa', sans-serif;
+
+  --ion-font-family: var(--shed-body);
+
+  /* TEXT SIZES */
+  --shed-font-brand: 24px;
+  --shed-font-page: 28px;
+  --shed-font-section: 21px;
+  --shed-font-card: 18px;
+  --shed-font-stat: 28px;
+  --shed-font-body: 14px;
+  --shed-font-label: 14px;
+  --shed-font-button: 13px;
+  --shed-font-support: 12px;
+  --shed-font-caption: 11px;
+
+  /* SPACING */
+  --shed-space-xs: 4px;
+  --shed-space-sm: 8px;
+  --shed-space-md: 12px;
+  --shed-space-lg: 16px;
+  --shed-space-card: 20px;
+  --shed-space-section: 28px;
+
+  /* SHAPES */
+  --shed-radius-card: 20px;
+  --shed-radius-control: 13px;
+
+  /* IONIC PRIMARY COLOR */
+  --ion-color-primary: #d76b91;
+  --ion-color-primary-rgb: 215, 107, 145;
+  --ion-color-primary-contrast: #ffffff;
+  --ion-color-primary-contrast-rgb: 255, 255, 255;
+  --ion-color-primary-shade: #bd5e80;
+  --ion-color-primary-tint: #db7a9c;
+}
+
+/* =========================================
+   GENERAL TEXT
+========================================= */
+
+html,
+body,
+ion-app {
+  font-family: var(--shed-body);
+  color: var(--shed-text);
+}
+
+html,
+body {
+  background: var(--shed-bg);
+}
+
+ion-content {
+  font-family: var(--shed-body);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--shed-heading);
+  font-weight: 600;
+}
+
+p,
+span,
+small,
+label,
+input,
+textarea,
+button,
+select {
+  font-family: var(--shed-body);
+}
+
+ion-button,
+ion-input,
+ion-textarea,
+ion-select,
+ion-label,
+ion-datetime,
+ion-tab-button,
+ion-toast,
+ion-alert {
+  font-family: var(--shed-body);
+}
+
+ion-button {
+  font-size: var(--shed-font-button);
+  font-weight: 700;
+  text-transform: none;
+  --border-radius: var(--shed-radius-control);
+}
+
+ion-card {
+  font-family: var(--shed-body);
+}
+
+/* =========================================
+   SHED TOAST NOTIFICATIONS
+========================================= */
+
+ion-toast.shed-toast-success {
+  --background: #513447;
+  --color: #ffffff;
+  --button-color: #f6c9d8;
+
+  font-family: var(--shed-body);
+  font-size: 13px;
+}
+
+ion-toast.shed-toast-error {
+  --background: #a84465;
+  --color: #ffffff;
+  --button-color: #ffffff;
+
+  font-family: var(--shed-body);
+  font-size: 13px;
+}
+
+/* =========================================
+   SHED CONFIRMATION ALERTS
+   ANDROID TEXT VISIBILITY FIX
+========================================= */
+
+ion-alert.shed-delete-alert {
+  --background: #fffafc;
+  --color: #513447;
+
+  color: #513447;
+  color-scheme: light;
+
+  font-family: var(--shed-body);
+}
+
+/* Alert container */
+
+ion-alert.shed-delete-alert .alert-wrapper {
+  background: #fffafc;
+  color: #513447;
+
+  border-radius: 16px;
+}
+
+/* Alert heading */
+
+ion-alert.shed-delete-alert .alert-title {
+  color: #513447 !important;
+
+  font-family: var(--shed-heading);
+  font-size: 21px;
+  font-weight: 600;
+  line-height: 1.35;
+
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Alert message */
+
+ion-alert.shed-delete-alert .alert-message {
+  color: #725467 !important;
+
+  font-family: var(--shed-body);
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.7;
+
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Alert buttons */
+
+ion-alert.shed-delete-alert .alert-button {
+  color: #a04d76;
+
+  font-family: var(--shed-body);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+/* Delete / remove button */
+
+ion-alert.shed-delete-alert
+.alert-button-role-destructive {
+  color: #c04d68;
+}
+
+/* =========================================
+   SHED DATE PICKER OVERLAY
+========================================= */
+
+ion-modal.shed-date-modal {
+  --width: min(94vw, 390px);
+  --height: auto;
+  --border-radius: 22px;
+  --background: #fffafc;
+  --color: #513447;
+
+  color-scheme: light;
+
+  font-family: var(--shed-body);
+}
+
+ion-modal.shed-date-modal ion-datetime {
+  font-family: var(--shed-body);
+
+  --ion-font-family: var(--shed-body);
+  --ion-color-primary: #d76b91;
+}
+
+/* =========================================
+   ANDROID NATIVE SAFE AREA
+========================================= */
+
+/*
+ * Capacitor 8 exposes safe-area insets
+ * for Android's system bars.
+ *
+ * This fallback is only for the native
+ * Android app, not the desktop browser.
+ *
+ * It reserves room below the tab bar
+ * for older three-button navigation.
+ */
+
+html.plt-capacitor.plt-android
+ion-tab-bar.shed-tab-bar {
+  padding-bottom: calc(
+    5px + max(
+      24px,
+      var(
+        --safe-area-inset-bottom,
+        env(safe-area-inset-bottom, 0px)
+      )
+    )
+  );
+}
+
+/* =========================================
+   ACCESSIBILITY
+========================================= */
+
+:focus-visible {
+  outline-color: var(--shed-rose);
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+  }
+
+}

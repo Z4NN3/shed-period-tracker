@@ -1,0 +1,757 @@
+
+<ion-header>
+  <ion-toolbar class="track-toolbar">
+    <ion-title>
+      <span class="app-name">shed.</span>
+      <span class="toolbar-subtitle">Track</span>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="track-content">
+  <main class="track-container">
+
+    <!-- PAGE INTRODUCTION -->
+    <section class="page-intro">
+      <p class="eyebrow">
+        SHED · YOUR CYCLE COMPANION
+      </p>
+
+      <h1>Track Your Journey</h1>
+
+      <p>
+        A little check-in helps you understand
+        your cycle and well-being.
+      </p>
+    </section>
+
+    <!-- PERIOD / WELLNESS SWITCH -->
+    <div
+      class="section-switch"
+      role="group"
+      aria-label="Tracking category">
+
+      <button
+        type="button"
+        [class.active]="activeSection === 'period'"
+        [attr.aria-pressed]="activeSection === 'period'"
+        (click)="showSection('period')">
+
+        <ion-icon
+          name="water-outline"
+          aria-hidden="true">
+        </ion-icon>
+
+        Period
+      </button>
+
+      <button
+        type="button"
+        [class.active]="activeSection === 'wellness'"
+        [attr.aria-pressed]="activeSection === 'wellness'"
+        (click)="showSection('wellness')">
+
+        <ion-icon
+          name="heart-outline"
+          aria-hidden="true">
+        </ion-icon>
+
+        Wellness
+      </button>
+    </div>
+
+    <!-- PERIOD TRACKING -->
+    @if (activeSection === 'period') {
+
+      <section>
+        <ion-card class="form-card">
+          <ion-card-content>
+
+            <div class="card-title-row">
+              <span class="title-icon">
+                <ion-icon
+                  name="calendar-outline"
+                  aria-hidden="true">
+                </ion-icon>
+              </span>
+
+              <div>
+                <h2>
+                  {{ periodEditingId !== null
+                    ? 'Edit Period'
+                    : 'Log Your Period' }}
+                </h2>
+
+                <p>
+                  Record your dates and flow intensity.
+                </p>
+              </div>
+            </div>
+
+            <!-- PERIOD DATES -->
+            <div class="form-grid">
+
+              <div class="field">
+                <label
+                  class="field-label"
+                  for="period-start">
+                  Start Date
+                </label>
+
+                <button
+                  id="period-start"
+                  class="date-trigger"
+                  type="button"
+                  (click)="openDatePicker('start')">
+
+                  <ion-icon
+                    name="calendar-outline"
+                    aria-hidden="true">
+                  </ion-icon>
+
+                  <span [class.placeholder]="!startDate">
+                    {{ startDate
+                      ? formatDate(startDate)
+                      : 'Select start date' }}
+                  </span>
+
+                  <ion-icon
+                    name="chevron-forward-outline"
+                    aria-hidden="true">
+                  </ion-icon>
+                </button>
+              </div>
+
+              <div class="field">
+                <label
+                  class="field-label"
+                  for="period-end">
+                  End Date
+                </label>
+
+                <button
+                  id="period-end"
+                  class="date-trigger"
+                  type="button"
+                  (click)="openDatePicker('end')">
+
+                  <ion-icon
+                    name="calendar-outline"
+                    aria-hidden="true">
+                  </ion-icon>
+
+                  <span [class.placeholder]="!endDate">
+                    {{ endDate
+                      ? formatDate(endDate)
+                      : 'Select end date' }}
+                  </span>
+
+                  <ion-icon
+                    name="chevron-forward-outline"
+                    aria-hidden="true">
+                  </ion-icon>
+                </button>
+              </div>
+
+            </div>
+
+            <!-- FLOW INTENSITY -->
+            <div class="field">
+              <p
+                class="field-label"
+                id="flow-label">
+                Flow Intensity
+              </p>
+
+              <div
+                class="flow-options"
+                role="group"
+                aria-labelledby="flow-label">
+
+                @for (option of flows; track option.value) {
+
+                  <button
+                    type="button"
+                    class="flow-option"
+                    [class.selected]="flow === option.value"
+                    [attr.aria-pressed]="flow === option.value"
+                    (click)="flow = option.value">
+
+                    <span
+                      class="flow-drops"
+                      aria-hidden="true">
+
+                      @for (drop of option.drops; track drop) {
+                        <ion-icon name="water-outline">
+                        </ion-icon>
+                      }
+
+                    </span>
+
+                    <span>{{ option.value }}</span>
+                  </button>
+
+                }
+              </div>
+            </div>
+
+            <!-- PERIOD NOTES -->
+            <div class="field">
+              <label
+                class="field-label"
+                for="period-notes">
+
+                Notes <span>(Optional)</span>
+              </label>
+
+              <ion-textarea
+                id="period-notes"
+                class="notes-input"
+                fill="outline"
+                [autoGrow]="true"
+                [rows]="3"
+                placeholder="How was your period?"
+                [(ngModel)]="periodNotes"
+                aria-label="Period notes">
+              </ion-textarea>
+            </div>
+
+            <!-- PERIOD ACTIONS -->
+            <div class="form-actions">
+
+              <ion-button
+                expand="block"
+                class="primary-button"
+                (click)="savePeriod()">
+
+                <ion-icon
+                  slot="start"
+                  [name]="periodEditingId !== null
+                    ? 'save-outline'
+                    : 'add-outline'">
+                </ion-icon>
+
+                {{ periodEditingId !== null
+                  ? 'Update Period'
+                  : 'Save Period' }}
+              </ion-button>
+
+              @if (periodEditingId === null) {
+
+                <ion-button
+                  expand="block"
+                  fill="outline"
+                  class="clear-button"
+                  [disabled]="!hasPeriodInputs"
+                  (click)="clearPeriodForm()">
+
+                  <ion-icon
+                    slot="start"
+                    name="refresh-outline">
+                  </ion-icon>
+
+                  Clear Form
+                </ion-button>
+
+              } @else {
+
+                <ion-button
+                  expand="block"
+                  fill="clear"
+                  class="cancel-button"
+                  (click)="resetPeriodForm()">
+
+                  Cancel Editing
+                </ion-button>
+
+              }
+
+            </div>
+
+          </ion-card-content>
+        </ion-card>
+
+        <!-- PERIOD HISTORY -->
+        <section class="records-section">
+
+          <div class="section-heading">
+            <h2>Period History</h2>
+
+            <span>
+              {{ periodRecords.length }} entries
+            </span>
+          </div>
+
+          @for (record of periodRecords; track record.id) {
+
+            <ion-card class="record-card">
+              <ion-card-content>
+
+                <div class="record-header">
+                  <span class="record-icon">
+
+                    <ion-icon
+                      name="water-outline"
+                      aria-hidden="true">
+                    </ion-icon>
+
+                  </span>
+
+                  <div class="record-heading">
+                    <h3>
+                      {{ formatDate(record.startDate) }}
+                    </h3>
+
+                    <p>
+                      to {{ formatDate(record.endDate) }}
+                    </p>
+                  </div>
+
+                  <span class="record-badge">
+                    {{ record.flow }}
+                  </span>
+                </div>
+
+                @if (record.notes) {
+                  <p class="record-notes">
+                    {{ record.notes }}
+                  </p>
+                }
+
+                <div class="record-actions">
+
+                  <ion-button
+                    size="small"
+                    fill="clear"
+                    (click)="editPeriod(record)">
+
+                    <ion-icon
+                      slot="start"
+                      name="create-outline">
+                    </ion-icon>
+
+                    Edit
+                  </ion-button>
+
+                  <ion-button
+                    size="small"
+                    fill="clear"
+                    class="delete-button"
+                    (click)="deletePeriod(record.id)">
+
+                    <ion-icon
+                      slot="start"
+                      name="trash-outline">
+                    </ion-icon>
+
+                    Delete
+                  </ion-button>
+
+                </div>
+
+              </ion-card-content>
+            </ion-card>
+
+          } @empty {
+
+            <div class="empty-state">
+
+              <ion-icon
+                name="calendar-outline"
+                aria-hidden="true">
+              </ion-icon>
+
+              <h3>No period records yet</h3>
+
+              <p>
+                Your saved periods will appear here.
+              </p>
+
+            </div>
+          }
+
+        </section>
+      </section>
+
+    } @else {
+
+      <!-- DAILY WELLNESS -->
+      <section>
+
+        <ion-card class="form-card">
+          <ion-card-content>
+
+            <div class="card-title-row">
+
+              <span class="title-icon mauve">
+                <ion-icon
+                  name="heart-outline"
+                  aria-hidden="true">
+                </ion-icon>
+              </span>
+
+              <div>
+                <h2>
+                  {{ wellnessEditingId !== null
+                    ? 'Edit Wellness Entry'
+                    : 'Daily Wellness' }}
+                </h2>
+
+                <p>
+                  Check in with your mood and symptoms.
+                </p>
+              </div>
+
+            </div>
+
+            <!-- WELLNESS DATE -->
+            <div class="field">
+
+              <label
+                class="field-label"
+                for="wellness-date">
+                Date
+              </label>
+
+              <button
+                id="wellness-date"
+                class="date-trigger"
+                type="button"
+                (click)="openDatePicker('wellness')">
+
+                <ion-icon
+                  name="calendar-outline"
+                  aria-hidden="true">
+                </ion-icon>
+
+                <span [class.placeholder]="!wellnessDate">
+                  {{ wellnessDate
+                    ? formatDate(wellnessDate)
+                    : 'Select date' }}
+                </span>
+
+                <ion-icon
+                  name="chevron-forward-outline"
+                  aria-hidden="true">
+                </ion-icon>
+              </button>
+
+            </div>
+
+            <!-- MOOD SELECTOR -->
+            <div class="field">
+              <p
+                class="field-label"
+                id="mood-label">
+                How are you feeling?
+              </p>
+
+              <div
+                class="mood-grid"
+                role="group"
+                aria-labelledby="mood-label">
+
+                @for (option of moods; track option.name) {
+
+                  <button
+                    type="button"
+                    class="mood-option"
+                    [class.selected]="mood === option.name"
+                    [attr.aria-pressed]="mood === option.name"
+                    (click)="mood = option.name">
+
+                    <ion-icon
+                      [name]="option.icon"
+                      aria-hidden="true">
+                    </ion-icon>
+
+                    <span>
+                      {{ option.name }}
+                    </span>
+                  </button>
+
+                }
+
+              </div>
+            </div>
+
+            <!-- SYMPTOMS -->
+            <div class="field">
+
+              <p
+                class="field-label"
+                id="symptoms-label">
+
+                Symptoms
+                <span>(Select all that apply)</span>
+              </p>
+
+              <div
+                class="symptoms-grid"
+                role="group"
+                aria-labelledby="symptoms-label">
+
+                @for (symptom of symptoms; track symptom.name) {
+
+                  <button
+                    type="button"
+                    class="symptom-chip"
+                    [class.selected]="selectedSymptoms.includes(symptom.name)"
+                    [attr.aria-pressed]="selectedSymptoms.includes(symptom.name)"
+                    (click)="toggleSymptom(symptom.name)">
+
+                    <ion-icon
+                      [name]="symptom.icon"
+                      aria-hidden="true">
+                    </ion-icon>
+
+                    {{ symptom.name }}
+                  </button>
+
+                }
+
+              </div>
+            </div>
+
+            <!-- WELLNESS NOTES -->
+            <div class="field">
+
+              <label
+                class="field-label"
+                for="wellness-notes">
+
+                Notes <span>(Optional)</span>
+              </label>
+
+              <ion-textarea
+                id="wellness-notes"
+                class="notes-input"
+                fill="outline"
+                [autoGrow]="true"
+                [rows]="3"
+                placeholder="Anything else on your mind?"
+                [(ngModel)]="wellnessNotes"
+                aria-label="Wellness notes">
+              </ion-textarea>
+            </div>
+
+            <!-- WELLNESS ACTIONS -->
+            <div class="form-actions">
+
+              <ion-button
+                expand="block"
+                class="primary-button"
+                (click)="saveWellness()">
+
+                <ion-icon
+                  slot="start"
+                  [name]="wellnessEditingId !== null
+                    ? 'save-outline'
+                    : 'add-outline'">
+                </ion-icon>
+
+                {{ wellnessEditingId !== null
+                  ? 'Update Wellness'
+                  : 'Save Wellness' }}
+              </ion-button>
+
+              @if (wellnessEditingId === null) {
+
+                <ion-button
+                  expand="block"
+                  fill="outline"
+                  class="clear-button"
+                  [disabled]="!hasWellnessInputs"
+                  (click)="clearWellnessForm()">
+
+                  <ion-icon
+                    slot="start"
+                    name="refresh-outline">
+                  </ion-icon>
+
+                  Clear Form
+                </ion-button>
+
+              } @else {
+
+                <ion-button
+                  expand="block"
+                  fill="clear"
+                  class="cancel-button"
+                  (click)="resetWellnessForm()">
+
+                  Cancel Editing
+                </ion-button>
+
+              }
+
+            </div>
+
+          </ion-card-content>
+        </ion-card>
+
+        <!-- WELLNESS HISTORY -->
+        <section class="records-section">
+
+          <div class="section-heading">
+            <h2>Wellness History</h2>
+
+            <span>
+              {{ wellnessRecords.length }} entries
+            </span>
+          </div>
+
+          @for (record of wellnessRecords; track record.id) {
+
+            <ion-card class="record-card">
+              <ion-card-content>
+
+                <div class="record-header">
+
+                  <span class="record-icon mauve">
+                    <ion-icon
+                      name="heart-outline"
+                      aria-hidden="true">
+                    </ion-icon>
+                  </span>
+
+                  <div class="record-heading">
+                    <h3>
+                      {{ formatDate(record.date) }}
+                    </h3>
+
+                    <p>
+                      Mood: {{ record.mood }}
+                    </p>
+                  </div>
+
+                </div>
+
+                @if (record.symptoms.length) {
+
+                  <div class="record-symptoms">
+
+                    @for (
+                      symptom of record.symptoms;
+                      track symptom
+                    ) {
+
+                      <span>{{ symptom }}</span>
+
+                    }
+
+                  </div>
+
+                }
+
+                @if (record.notes) {
+                  <p class="record-notes">
+                    {{ record.notes }}
+                  </p>
+                }
+
+                <div class="record-actions">
+
+                  <ion-button
+                    size="small"
+                    fill="clear"
+                    (click)="editWellness(record)">
+
+                    <ion-icon
+                      name="create-outline"
+                      slot="start">
+                    </ion-icon>
+
+                    Edit
+                  </ion-button>
+
+                  <ion-button
+                    size="small"
+                    fill="clear"
+                    class="delete-button"
+                    (click)="deleteWellness(record.id)">
+
+                    <ion-icon
+                      name="trash-outline"
+                      slot="start">
+                    </ion-icon>
+
+                    Delete
+                  </ion-button>
+
+                </div>
+
+              </ion-card-content>
+            </ion-card>
+
+          } @empty {
+
+            <div class="empty-state">
+
+              <ion-icon
+                name="heart-outline"
+                aria-hidden="true">
+              </ion-icon>
+
+              <h3>No wellness entries yet</h3>
+
+              <p>
+                Your daily check-ins will appear here.
+              </p>
+
+            </div>
+
+          }
+
+        </section>
+
+      </section>
+
+    }
+
+  </main>
+
+  <!-- SHARED DATE PICKER MODAL -->
+  <ion-modal
+    [isOpen]="datePickerOpen !== null"
+    (didDismiss)="closeDatePicker()"
+    class="shed-date-modal">
+
+    <ng-template>
+      <div class="picker-panel">
+
+        <h2>Select Date</h2>
+
+        <ion-datetime
+          presentation="date"
+          [preferWheel]="false"
+          [max]="todayDate"
+          [value]="pendingDate || undefined"
+          (ionChange)="onPickerDateChange($event.detail.value)">
+        </ion-datetime>
+
+        <div class="picker-actions">
+
+          <ion-button
+            fill="clear"
+            (click)="closeDatePicker()">
+
+            Cancel
+          </ion-button>
+
+          <ion-button
+            class="primary-button"
+            [disabled]="!pendingDate"
+            (click)="confirmDatePicker()">
+
+            Confirm
+          </ion-button>
+
+        </div>
+
+      </div>
+    </ng-template>
+
+  </ion-modal>
+
+</ion-content>

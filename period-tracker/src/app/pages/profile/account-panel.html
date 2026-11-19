@@ -1,0 +1,214 @@
+
+<section class="shed-account-card">
+
+  <!-- ACCOUNT HEADING -->
+  <div class="account-heading">
+
+    <div
+      class="account-heading-icon"
+      aria-hidden="true">
+      <span>♡</span>
+    </div>
+
+    <div style="flex: 1; min-width: 0;">
+      <h2>Shed Account</h2>
+      <p>Manage your Shed sign-in.</p>
+    </div>
+
+    <!-- LOG OUT AT UPPER RIGHT -->
+    @if (currentUser && !isCheckingSession) {
+
+      <button
+        type="button"
+        class="account-secondary-button"
+        style="
+          width: auto;
+          min-height: 40px;
+          margin: 0;
+          padding: 9px 13px;
+          font-size: 12px;
+          flex-shrink: 0;
+        "
+        [disabled]="isBusy"
+        (click)="logout()">
+
+        {{ isBusy ? 'Signing out...' : 'Log Out' }}
+
+      </button>
+
+    }
+
+  </div>
+
+  <!-- ACCOUNT MESSAGES -->
+  @if (message) {
+
+    <p
+      class="account-message success"
+      role="status">
+      {{ message }}
+    </p>
+
+  }
+
+  @if (errorMessage) {
+
+    <p
+      class="account-message error"
+      role="alert">
+      {{ errorMessage }}
+    </p>
+
+  }
+
+  <!-- CHECKING SESSION -->
+  @if (isCheckingSession) {
+
+    <p class="account-description">
+      Checking your session...
+    </p>
+
+  } @else if (currentUser) {
+
+    <!-- LOGGED-IN ACCOUNT -->
+    <div class="signed-in-info">
+
+      <span class="account-status">
+        Signed in
+      </span>
+
+      <h3>
+        {{ currentUser.displayName }}
+      </h3>
+
+      <p class="account-email">
+        {{ currentUser.email }}
+      </p>
+
+    </div>
+
+  } @else {
+
+    <!-- LOGIN / REGISTER TABS -->
+    <div class="account-tabs">
+
+      <button
+        type="button"
+        [class.active]="mode === 'login'"
+        [disabled]="isBusy"
+        (click)="setMode('login')">
+
+        Log In
+
+      </button>
+
+      <button
+        type="button"
+        [class.active]="mode === 'register'"
+        [disabled]="isBusy"
+        (click)="setMode('register')">
+
+        Create Account
+
+      </button>
+
+    </div>
+
+    <!-- ACCOUNT FORM -->
+    <form
+      class="account-form"
+      (ngSubmit)="submit()">
+
+      <!-- DISPLAY NAME -->
+      @if (mode === 'register') {
+
+        <div class="account-field">
+
+          <label for="shed-account-name">
+            Display Name
+          </label>
+
+          <input
+            id="shed-account-name"
+            name="displayName"
+            type="text"
+            autocomplete="name"
+            maxlength="100"
+            required
+            [(ngModel)]="displayName"
+            placeholder="Your name">
+
+        </div>
+
+      }
+
+      <!-- EMAIL -->
+      <div class="account-field">
+
+        <label for="shed-account-email">
+          Email Address
+        </label>
+
+        <input
+          id="shed-account-email"
+          name="email"
+          type="email"
+          autocomplete="email"
+          maxlength="191"
+          required
+          [(ngModel)]="email"
+          placeholder="you@example.com">
+
+      </div>
+
+      <!-- PASSWORD -->
+      <div class="account-field">
+
+        <label for="shed-account-password">
+          Password
+        </label>
+
+        <input
+          id="shed-account-password"
+          name="password"
+          type="password"
+          [attr.autocomplete]="mode === 'register'
+            ? 'new-password'
+            : 'current-password'"
+          minlength="12"
+          maxlength="128"
+          required
+          [(ngModel)]="password"
+          placeholder="Enter your password">
+
+        @if (mode === 'register') {
+
+          <small>
+            Use at least 12 characters.
+          </small>
+
+        }
+
+      </div>
+
+      <!-- SUBMIT -->
+      <button
+        type="submit"
+        class="account-primary-button"
+        [disabled]="isBusy">
+
+        @if (isBusy) {
+          Please wait...
+        } @else if (mode === 'register') {
+          Create Account
+        } @else {
+          Log In
+        }
+
+      </button>
+
+    </form>
+
+  }
+
+</section>

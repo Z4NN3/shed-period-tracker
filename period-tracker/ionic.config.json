@@ -1,0 +1,7 @@
+{
+  "name": "period-tracker",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}

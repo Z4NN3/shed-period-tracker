@@ -1,0 +1,642 @@
+
+<!-- ========================================
+     SHED - HISTORY PAGE
+======================================== -->
+
+<ion-header>
+  <ion-toolbar class="history-toolbar">
+
+    <ion-title>
+      <span class="app-name">shed.</span>
+      <span class="page-name">History</span>
+    </ion-title>
+
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="history-content">
+
+  <main class="history-container">
+
+    <!-- ====================================
+         PAGE INTRODUCTION
+    ==================================== -->
+
+    <section class="history-intro">
+
+      <p class="eyebrow">
+        SHED · YOUR CYCLE COMPANION
+      </p>
+
+      <div class="intro-heading">
+
+        <div class="intro-copy">
+
+          <h1>Your History</h1>
+
+          <p>
+            A gentle space to look back
+            on your cycle and daily wellness.
+          </p>
+
+        </div>
+
+        <div
+          class="intro-icon"
+          aria-hidden="true">
+
+          <ion-icon name="book-outline">
+          </ion-icon>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- ====================================
+         HISTORY OVERVIEW
+    ==================================== -->
+
+    <section
+      class="history-overview"
+      aria-label="History summary">
+
+      <div class="summary-card">
+
+        <div
+          class="summary-icon"
+          aria-hidden="true">
+
+          <ion-icon name="calendar-outline">
+          </ion-icon>
+
+        </div>
+
+        <div class="summary-text">
+
+          <span class="summary-label">
+            Period Records
+          </span>
+
+          <strong class="summary-value">
+            {{ totalPeriods }}
+          </strong>
+
+        </div>
+
+      </div>
+
+      <div class="summary-card">
+
+        <div
+          class="summary-icon"
+          aria-hidden="true">
+
+          <ion-icon name="heart-outline">
+          </ion-icon>
+
+        </div>
+
+        <div class="summary-text">
+
+          <span class="summary-label">
+            Wellness Entries
+          </span>
+
+          <strong class="summary-value">
+            {{ totalWellnessEntries }}
+          </strong>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- ====================================
+         PERIOD / WELLNESS SWITCH
+         MATCHED WITH TRACK PAGE
+    ==================================== -->
+
+    <section class="history-tabs-section">
+
+      <h2 class="section-title">
+        Saved Records
+      </h2>
+
+      <div
+        class="history-tabs"
+        role="group"
+        aria-label="History categories">
+
+        <!-- PERIOD BUTTON -->
+
+        <button
+          type="button"
+          class="history-tab"
+          [class.active]="activeSection === 'period'"
+          [attr.aria-pressed]="activeSection === 'period'"
+          (click)="showSection('period')">
+
+          <ion-icon
+            name="calendar-outline"
+            aria-hidden="true">
+          </ion-icon>
+
+          <span>Period</span>
+
+        </button>
+
+        <!-- WELLNESS BUTTON -->
+
+        <button
+          type="button"
+          class="history-tab"
+          [class.active]="activeSection === 'wellness'"
+          [attr.aria-pressed]="activeSection === 'wellness'"
+          (click)="showSection('wellness')">
+
+          <ion-icon
+            name="heart-outline"
+            aria-hidden="true">
+          </ion-icon>
+
+          <span>Wellness</span>
+
+        </button>
+
+      </div>
+
+    </section>
+
+    <!-- ====================================
+         PERIOD HISTORY
+    ==================================== -->
+
+    @if (activeSection === 'period') {
+
+      <section class="records-section">
+
+        <div class="records-heading">
+
+          <div>
+
+            <h2 class="section-title">
+              Period History
+            </h2>
+
+            <p class="section-description">
+              Your recorded menstrual cycles,
+              from newest to oldest.
+            </p>
+
+          </div>
+
+          <span class="records-count">
+            {{ totalPeriods }}
+            {{ totalPeriods === 1 ? 'record' : 'records' }}
+          </span>
+
+        </div>
+
+        @if (periodRecords.length === 0) {
+
+          <!-- EMPTY PERIOD STATE -->
+
+          <div class="empty-state">
+
+            <div
+              class="empty-icon"
+              aria-hidden="true">
+
+              <ion-icon name="calendar-outline">
+              </ion-icon>
+
+            </div>
+
+            <h3>No period records yet</h3>
+
+            <p>
+              Your saved menstrual cycles will
+              appear here once you log a period.
+            </p>
+
+            <ion-button
+              class="empty-action"
+              routerLink="/tabs/track">
+
+              <ion-icon
+                name="add-circle-outline"
+                slot="start">
+              </ion-icon>
+
+              Log Your First Period
+
+            </ion-button>
+
+          </div>
+
+        } @else {
+
+          <!-- PERIOD RECORDS -->
+
+          <div class="records-list">
+
+            @for (
+              record of periodRecords;
+              track record.id
+            ) {
+
+              <ion-card class="history-record-card period-record">
+
+                <ion-card-content>
+
+                  <div class="record-header">
+
+                    <div class="record-heading">
+
+                      <div
+                        class="record-icon"
+                        aria-hidden="true">
+
+                        <ion-icon name="water-outline">
+                        </ion-icon>
+
+                      </div>
+
+                      <div class="record-heading-copy">
+
+                        <span class="record-eyebrow">
+                          PERIOD RECORD
+                        </span>
+
+                        <h3>
+                          {{ formatDate(record.startDate) }}
+                        </h3>
+
+                      </div>
+
+                    </div>
+
+                    <span
+                      class="flow-badge"
+                      [class.light]="getFlowClass(record.flow) === 'light'"
+                      [class.medium]="getFlowClass(record.flow) === 'medium'"
+                      [class.heavy]="getFlowClass(record.flow) === 'heavy'">
+
+                      {{ record.flow }} Flow
+
+                    </span>
+
+                  </div>
+
+                  <div class="record-details">
+
+                    <div class="detail-row">
+
+                      <span class="detail-label">
+
+                        <ion-icon
+                          name="calendar-outline"
+                          aria-hidden="true">
+                        </ion-icon>
+
+                        Period Dates
+
+                      </span>
+
+                      <strong class="detail-value">
+                        {{ formatDateRange(
+                          record.startDate,
+                          record.endDate
+                        ) }}
+                      </strong>
+
+                    </div>
+
+                    <div class="detail-row">
+
+                      <span class="detail-label">
+
+                        <ion-icon
+                          name="time-outline"
+                          aria-hidden="true">
+                        </ion-icon>
+
+                        Duration
+
+                      </span>
+
+                      <strong class="detail-value">
+                        {{ getPeriodDuration(record) }}
+                        {{ getPeriodDuration(record) === 1
+                          ? 'day'
+                          : 'days' }}
+                      </strong>
+
+                    </div>
+
+                    <div class="detail-row">
+
+                      <span class="detail-label">
+
+                        <ion-icon
+                          name="water-outline"
+                          aria-hidden="true">
+                        </ion-icon>
+
+                        Flow Intensity
+
+                      </span>
+
+                      <strong class="detail-value">
+                        {{ record.flow }}
+                      </strong>
+
+                    </div>
+
+                  </div>
+
+                  @if (record.notes) {
+
+                    <div class="record-notes">
+
+                      <div class="notes-heading">
+
+                        <ion-icon
+                          name="document-text-outline">
+                        </ion-icon>
+
+                        <span>Notes</span>
+
+                      </div>
+
+                      <p>{{ record.notes }}</p>
+
+                    </div>
+
+                  }
+
+                </ion-card-content>
+
+              </ion-card>
+
+            }
+
+          </div>
+
+        }
+
+      </section>
+
+    }
+
+    <!-- ====================================
+         WELLNESS HISTORY
+    ==================================== -->
+
+    @if (activeSection === 'wellness') {
+
+      <section class="records-section">
+
+        <div class="records-heading">
+
+          <div>
+
+            <h2 class="section-title">
+              Wellness History
+            </h2>
+
+            <p class="section-description">
+              Your daily moods, symptoms,
+              and personal notes.
+            </p>
+
+          </div>
+
+          <span class="records-count">
+            {{ totalWellnessEntries }}
+            {{ totalWellnessEntries === 1
+              ? 'entry'
+              : 'entries' }}
+          </span>
+
+        </div>
+
+        @if (wellnessRecords.length === 0) {
+
+          <!-- EMPTY WELLNESS STATE -->
+
+          <div class="empty-state">
+
+            <div
+              class="empty-icon"
+              aria-hidden="true">
+
+              <ion-icon name="heart-outline">
+              </ion-icon>
+
+            </div>
+
+            <h3>No wellness entries yet</h3>
+
+            <p>
+              Start checking in with yourself.
+              Your daily wellness entries
+              will appear here.
+            </p>
+
+            <ion-button
+              class="empty-action"
+              routerLink="/tabs/track">
+
+              <ion-icon
+                name="add-circle-outline"
+                slot="start">
+              </ion-icon>
+
+              Log Your Wellness
+
+            </ion-button>
+
+          </div>
+
+        } @else {
+
+          <!-- WELLNESS RECORDS -->
+
+          <div class="records-list">
+
+            @for (
+              entry of wellnessRecords;
+              track entry.id
+            ) {
+
+              <ion-card class="history-record-card wellness-record">
+
+                <ion-card-content>
+
+                  <div class="record-header">
+
+                    <div class="record-heading">
+
+                      <div
+                        class="record-icon"
+                        aria-hidden="true">
+
+                        <ion-icon
+                          [name]="getMoodIcon(entry.mood)">
+                        </ion-icon>
+
+                      </div>
+
+                      <div class="record-heading-copy">
+
+                        <span class="record-eyebrow">
+                          WELLNESS ENTRY
+                        </span>
+
+                        <h3>
+                          {{ formatDate(entry.date) }}
+                        </h3>
+
+                      </div>
+
+                    </div>
+
+                    <span class="mood-badge">
+                      {{ entry.mood }}
+                    </span>
+
+                  </div>
+
+                  <div class="record-details">
+
+                    <div class="detail-row">
+
+                      <span class="detail-label">
+
+                        <ion-icon
+                          name="heart-outline"
+                          aria-hidden="true">
+                        </ion-icon>
+
+                        Mood
+
+                      </span>
+
+                      <strong class="detail-value">
+                        {{ entry.mood }}
+                      </strong>
+
+                    </div>
+
+                    <div class="detail-row symptoms-row">
+
+                      <span class="detail-label">
+
+                        <ion-icon
+                          name="sparkles-outline"
+                          aria-hidden="true">
+                        </ion-icon>
+
+                        Symptoms
+
+                      </span>
+
+                      <span class="detail-value">
+                        {{ getSymptomsLabel(entry) }}
+                      </span>
+
+                    </div>
+
+                  </div>
+
+                  @if (entry.notes) {
+
+                    <div class="record-notes">
+
+                      <div class="notes-heading">
+
+                        <ion-icon
+                          name="document-text-outline">
+                        </ion-icon>
+
+                        <span>Notes</span>
+
+                      </div>
+
+                      <p>{{ entry.notes }}</p>
+
+                    </div>
+
+                  }
+
+                </ion-card-content>
+
+              </ion-card>
+
+            }
+
+          </div>
+
+        }
+
+      </section>
+
+    }
+
+    <!-- ====================================
+         GENTLE REMINDER
+    ==================================== -->
+
+    <ion-card class="history-reminder">
+
+      <ion-card-content>
+
+        <div class="reminder-header">
+
+          <div
+            class="reminder-icon"
+            aria-hidden="true">
+
+            <ion-icon name="sparkles-outline">
+            </ion-icon>
+
+          </div>
+
+          <h3>Your journey matters</h3>
+
+        </div>
+
+        <p>
+          Every entry helps you understand
+          your patterns over time.
+          Your experiences are unique,
+          and your history is here to
+          support your self-awareness.
+        </p>
+
+        <ion-button
+          class="reminder-link"
+          fill="clear"
+          size="small"
+          routerLink="/tabs/track">
+
+          Open Track
+
+          <ion-icon
+            name="arrow-forward-outline"
+            slot="end">
+          </ion-icon>
+
+        </ion-button>
+
+      </ion-card-content>
+
+    </ion-card>
+
+  </main>
+
+</ion-content>
